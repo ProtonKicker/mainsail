@@ -1,0 +1,494 @@
+/*
+ * Cupertino — an iOS / SwiftUI (Apple HIG) design layer for Mainsail.
+ *
+ * It reskins the whole app to read like a first-party Apple product:
+ *  - SF Pro system typography and the full Apple light-mode color palette.
+ *  - Translucent "materials" (backdrop-filter blur + saturate) exactly like
+ *    UIKit's UIVisualEffectView / SwiftUI Material `.regular` and `.thick`.
+ *  - iOS grouped-content insets, large navigation titles and spring motion.
+ *
+ * Everything is forced to light mode here so the UI is always the crisp,
+ * white "paper" look native to iOS.
+ */
+
+/* ------------------------- Cupertino tokens ------------------------- */
+:root {
+    /* Apple system radii (HIG corners) */
+    --cu-radius-sm: 8px;
+    --cu-radius-md: 12px;
+    --cu-radius-lg: 16px;
+    --cu-radius-xl: 22px;
+    --cu-radius-round: 999px;
+
+    /* Apple system colors (light mode) */
+    --cu-blue: #007aff;
+    --cu-green: #34c759;
+    --cu-red: #ff3b30;
+    --cu-orange: #ff9500;
+    --cu-gray: #8e8e93;
+    --cu-gray2: #aeaeb2;
+    --cu-gray3: #c7c7cc;
+    --cu-secondary-label: rgba(60, 60, 67, 0.6);
+    --cu-tertiary-label: rgba(60, 60, 67, 0.3);
+    --cu-quaternary-label: rgba(60, 60, 67, 0.18);
+    --cu-separator: rgba(60, 60, 67, 0.29);
+    --cu-separator-opaque: #c6c6c8;
+    --cu-grouped-bg: #f2f2f7;
+    --cu-secondary-bg: #ffffff;
+    --cu-tertiary-bg: #f2f2f7;
+    --cu-sys-fill: rgba(120, 120, 128, 0.12);
+    --cu-secondary-fill: rgba(120, 120, 128, 0.16);
+    --cu-tertiary-fill: rgba(118, 118, 128, 0.12);
+    --cu-quaternary-fill: rgba(116, 116, 128, 0.08);
+    --cu-label: #000000;
+    --cu-link: #007aff;
+
+    /* SwiftUI spring easing: gentle overshoot, very Apple */
+    --cu-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --cu-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --cu-dur: 240ms;
+}
+
+/* Force light mode everywhere (paper look) */
+.theme--light,
+.theme--dark,
+.v-application.theme--light,
+.v-application.theme--dark {
+    background-color: var(--cu-grouped-bg) !important;
+    color: var(--cu-label) !important;
+}
+
+html,
+body,
+.v-application {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        'SF Pro Display',
+        'SF Pro Text',
+        'Segoe UI',
+        Roboto,
+        'Helvetica Neue',
+        sans-serif !important;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ------------------- App canvas: system grouped background ------------------- */
+.v-application--wrap,
+#content {
+    background-color: var(--cu-grouped-bg) !important;
+    background-image: none !important;
+}
+
+/* ------------------- Scrollbars: thin, iOS qualifiers ------------------- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--cu-gray3);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cu-gray2);
+    background-clip: content-box;
+}
+html.theme--light body {
+    background: var(--cu-grouped-bg) !important;
+}
+html.theme--light ::-webkit-scrollbar,
+html.theme--light {
+    background-color: var(--cu-grouped-bg);
+}
+html.theme--light ::-webkit-scrollbar-thumb {
+    background-color: var(--cu-gray3);
+    border-color: var(--cu-grouped-bg);
+}
+
+/* OverlayScrollbars handle */
+.os-scrollbar-handle {
+    background: var(--cu-gray3) !important;
+    border-radius: 8px !important;
+    opacity: 0.8 !important;
+}
+.os-scrollbar-handle:hover {
+    background: var(--cu-gray2) !important;
+    opacity: 1 !important;
+}
+
+/* ------------------- App bar / navigation bar: frosted material ------------------- */
+header.topbar.v-app-bar {
+    background: rgba(255, 255, 255, 0.78) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(30px) !important;
+    backdrop-filter: saturate(180%) blur(30px) !important;
+    box-shadow: none !important;
+    border-bottom: 0.5px solid var(--cu-separator-opaque) !important;
+}
+header.topbar .v-toolbar__content {
+    height: 52px !important;
+}
+
+/* Topbar action buttons: compact iOS "capsule" buttons */
+header.topbar .v-btn.button-min-width-auto {
+    margin: 0 4px;
+    border-radius: var(--cu-radius-round) !important;
+    font-weight: 500;
+}
+header.topbar .v-btn.button-min-width-auto:not(.v-btn--icon) {
+    padding: 0 16px;
+    height: 32px !important;
+    background: var(--cu-sys-fill) !important;
+    color: var(--cu-blue) !important;
+}
+header.topbar .v-btn.button-min-width-auto:not(.v-btn--icon):hover {
+    background: rgba(120, 120, 128, 0.2) !important;
+}
+
+/* Emergency: iOS destructive tint capsule */
+header.topbar .v-btn.emergency-button {
+    background: rgba(255, 59, 48, 0.12) !important;
+    color: var(--cu-red) !important;
+}
+header.topbar .v-btn.emergency-button:hover {
+    background: rgba(255, 59, 48, 0.2) !important;
+}
+
+/* ------------------- Sidebar: SwiftUI .regular material sidebar ------------------- */
+.v-navigation-drawer {
+    background: rgba(249, 249, 249, 0.86) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(30px) !important;
+    backdrop-filter: saturate(180%) blur(30px) !important;
+    border-right: 0.5px solid var(--cu-separator-opaque) !important;
+    box-shadow: none !important;
+}
+
+/* Sidebar items: pill navigation with soft selected tint (iOS sidebar style) */
+.v-navigation-drawer .v-list .v-list-item {
+    border-radius: 8px !important;
+    margin: 2px 10px;
+    min-height: 44px;
+    padding: 0 12px;
+    transition:
+        background-color var(--cu-dur) var(--cu-ease),
+        transform var(--cu-dur) var(--cu-ease);
+}
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item {
+    background: rgba(0, 122, 255, 0.12) !important;
+    color: var(--cu-blue) !important;
+}
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active .v-list-item__icon,
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active .v-list-item__title,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item .v-list-item__icon,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item .v-list-item__title {
+    color: var(--cu-blue) !important;
+}
+.v-navigation-drawer .v-list .v-list-item:not(.v-list-item--active):hover {
+    background-color: var(--cu-sys-fill) !important;
+}
+.menu-item-title {
+    text-transform: none !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.01em !important;
+}
+.active-nav-item {
+    border-right: none !important;
+}
+
+/* ------------------- Cards / panels: iOS grouped cells ------------------- */
+.v-card {
+    border-radius: var(--cu-radius-xl) !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+    background-color: #ffffff !important;
+    color: var(--cu-label) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    overflow: hidden;
+    transition:
+        box-shadow var(--cu-dur) var(--cu-ease),
+        transform var(--cu-dur) var(--cu-ease);
+}
+
+/* Panel toolbars: quiet inline labels (iOS grouped cell headers) */
+.v-card > .v-toolbar,
+.v-card .panel-toolbar {
+    background-color: transparent !important;
+    border-bottom: 0.5px solid var(--cu-separator) !important;
+}
+.v-card.panel .v-toolbar__title {
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--cu-label);
+}
+.v-card.panel .v-toolbar__title .v-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cu-quaternary-fill);
+    color: var(--cu-blue) !important;
+}
+.v-card.panel .panel-toolbar.v-toolbar {
+    min-height: 44px !important;
+}
+.v-card.panel .v-toolbar__content {
+    padding-left: 16px;
+    padding-right: 8px;
+}
+.v-card.panel .v-toolbar__content .subheading {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--cu-label);
+}
+.v-card.panel {
+    margin-bottom: 16px !important;
+}
+
+/* ------------------- Buttons ------------------- */
+.v-btn {
+    text-transform: none;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif !important;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: var(--cu-radius-round) !important;
+    box-shadow: none !important;
+    transition:
+        background-color var(--cu-dur) var(--cu-ease),
+        transform var(--cu-dur) var(--cu-spring),
+        box-shadow var(--cu-dur) var(--cu-ease);
+}
+.v-btn:not(.v-btn--disabled):active {
+    transform: scale(0.96);
+}
+.v-btn.v-btn--icon {
+    border-radius: 50% !important;
+}
+
+/* Primary/contained: filled Apple button */
+.v-btn.primary:not(.v-btn--outlined):not(.v-btn--text),
+.v-btn--contained.primary {
+    background-color: var(--cu-blue) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+.v-btn.primary:not(.v-btn--disabled):hover {
+    background-color: #3395ff !important;
+}
+
+/* Text buttons: accent tint */
+.v-btn.primary.v-btn--text,
+.v-btn.primary.v-btn--plain {
+    color: var(--cu-blue) !important;
+}
+
+/* ------------------- Dialogs & menus: iOS sheets ------------------- */
+.v-dialog > .v-card {
+    border-radius: var(--cu-radius-xl) !important;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.3) !important;
+}
+.v-dialog .v-card__title {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--cu-label);
+}
+.v-menu__content .v-list,
+.v-sheet.menuable__content__active {
+    border-radius: var(--cu-radius-md) !important;
+}
+.v-menu__content .v-list-item {
+    border-radius: var(--cu-radius-sm);
+    transition:
+        background-color var(--cu-dur) var(--cu-ease),
+        transform var(--cu-dur) var(--cu-ease);
+}
+.v-menu__content .v-list-item:hover {
+    background-color: var(--cu-sys-fill);
+}
+
+/* ------------------- Tabs / segmented control ------------------- */
+.v-tabs {
+    border-radius: var(--cu-radius-md) !important;
+    background: var(--cu-quaternary-fill);
+    overflow: hidden;
+}
+.v-tabs .v-tab {
+    border-radius: var(--cu-radius-md) !important;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: color var(--cu-dur) var(--cu-ease);
+}
+.v-tab--active {
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.v-tabs-slider-wrapper {
+    height: 0 !important;
+}
+
+/* ------------------- Switches: Apple toggles ------------------- */
+.v-input--switch__track {
+    border-radius: var(--cu-radius-round);
+}
+.v-input--switch .v-input--switch__thumb {
+    background-color: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* ------------------- Inputs ------------------- */
+.v-text-field .v-input__control .v-input__slot,
+.v-text-field > .v-input__control > .v-input__slot {
+    border-radius: var(--cu-radius-sm) !important;
+}
+.v-text-field.is-focused .v-input__control .v-input__slot,
+.v-text-field:focus-within .v-input__control .v-input__slot {
+    border-color: var(--cu-blue) !important;
+}
+
+/* ------------------- Lists: iOS grouped / inset ------------------- */
+.v-list-item,
+.v-list-group__items .v-list-item {
+    border-radius: var(--cu-radius-md);
+    transition:
+        background-color var(--cu-dur) var(--cu-ease),
+        transform var(--cu-dur) var(--cu-ease);
+}
+.v-list-item--link:hover,
+.main-nav .v-list-item {
+    background-color: var(--cu-sys-fill) !important;
+}
+.v-list-item.v-list-item--active {
+    color: var(--cu-blue) !important;
+}
+
+/* ------------------- G-Code Files Tab: iOS list ------------------- */
+.gcode-files-panel .v-data-table {
+    background: transparent !important;
+}
+.gcode-files-panel .v-data-table tr:hover {
+    background-color: var(--cu-quaternary-fill) !important;
+}
+.gcode-files-panel .v-data-table td {
+    border-bottom: 0.5px solid var(--cu-separator) !important;
+    height: 56px !important;
+}
+.gcode-files-panel .v-data-table th {
+    border-bottom: 0.5px solid var(--cu-separator) !important;
+    font-weight: 500 !important;
+    color: var(--cu-secondary-label) !important;
+    text-transform: none !important;
+}
+
+/* ------------------- Console Tab ------------------- */
+.consoleTable {
+    background: #ffffff !important;
+    padding: 16px;
+}
+.consoleTableRow {
+    border-radius: 10px;
+    margin-bottom: 2px;
+    padding: 4px 12px !important;
+}
+.consoleTableRow:hover {
+    background-color: var(--cu-quaternary-fill);
+}
+.consoleTableRow .v-list-item__content {
+    font-family: 'SF Mono', 'Roboto Mono', monospace;
+    font-size: 0.92rem;
+}
+.gcode-command-field.v-textarea .v-input__control {
+    border-radius: 16px !important;
+    overflow: hidden;
+}
+
+/* ------------------- Dashboard hero tiles ------------------- */
+.pc-dashboard-hero .pc-hero-tile {
+    border-radius: 24px !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+    overflow: hidden;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+.pc-hero-tile__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cu-quaternary-fill) !important;
+    box-shadow: none !important;
+}
+
+/* ------------------- Sliders, chips, progress ------------------- */
+.v-slider__track-container,
+.v-slider__track,
+.v-slider__track-background,
+.v-slider__track-fill {
+    border-radius: var(--cu-radius-round);
+}
+.v-slider__thumb {
+    transition: transform var(--cu-dur) var(--cu-spring) !important;
+}
+.v-chip {
+    border-radius: var(--cu-radius-round) !important;
+    font-weight: 500;
+}
+.v-progress-linear__bar__determinate,
+.v-progress-linear__bar__indeterminate {
+    border-radius: var(--cu-radius-round);
+}
+
+/* ------------------- Reduced motion ------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ------------------- Layout container ------------------- */
+.v-container#page-container {
+    max-width: 1600px;
+}
+#page-container > .v-row {
+    margin-top: 0;
+}
+
+/* ------------------------- Layout fixes ------------------------- */
+/* The connecting / loading overlay can sit on top of the app during
+   boot and on disconnects. It used a dark scrim that covered the whole
+   viewport, making the page look blank. Keep it out of the way so the
+   real UI is always visible. */
+.v-overlay.theme--dark:not(.v-overlay--active) {
+    display: none !important;
+}
+
+/* Ensure the main area always sits to the right of the fixed sidebar
+   and below the topbar, regardless of the Vuetify wrap direction. */
+.v-application--wrap {
+    flex-direction: column;
+}
+.v-main {
+    padding-left: 220px;
+    padding-top: 48px;
+    min-height: 100vh;
+}
+@media (max-width: 960px) {
+    .v-main {
+        padding-left: 56px;
+    }
+}

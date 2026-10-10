@@ -5,18 +5,24 @@
         xmlns:xlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
-        viewBox="0 0 599.38 523.11"
+        viewBox="0 0 64 64"
         xml:space="preserve">
+        <!--
+            Minimal "Cupertino" mark — a rounded app-icon tile with a single
+            streamed print line, rendered in the active accent color. Clean,
+            monochrome and deliberately quiet, echoing Apple's app-icon language.
+        -->
         <g>
+            <!-- Rounded app tile -->
+            <rect x="4" y="4" width="56" height="56" rx="14" :fill="color + '1A'" />
+            <!-- Print bed -->
+            <rect x="18" y="36" width="28" height="6" rx="3" :fill="color" />
+            <!-- Extruder head / nozzle -->
             <path
-                :style="'fill:' + color + ';'"
-                d="M382.29,142.98L132.98,522.82L0,522.68L344.3,0l0,0C352.18,49.06,365.2,97.68,382.29,142.98" />
-            <path
-                :style="'fill:' + color + ';'"
-                d="M413.28,213.54L208.5,522.92l132.94,0.19l135.03-206.33l0,0C452.69,284.29,431.53,249.77,413.28,213.54 L413.28,213.54" />
-            <path
-                :style="'fill:' + color + ';'"
-                d="M599.38,447.69l-49.25,75.42L417,522.82l101.6-153.67l0,0C543.48,397.35,570.49,423.61,599.38,447.69 L599.38,447.69z" />
+                :fill="color"
+                d="M32 16 a5 5 0 0 1 5 5 c0 2.1 -1.3 3.9 -3 4.7 v5.3 h-4 v-5.3 c-1.7 -0.8 -3 -2.6 -3 -4.7 a5 5 0 0 1 5 -5 z" />
+            <!-- Droplet of filament deposited on the bed -->
+            <circle cx="32" cy="39" r="2.4" fill="#ffffff" />
         </g>
     </svg>
 </template>

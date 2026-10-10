@@ -4,24 +4,56 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <title>Mainsail</title>
-        <meta name="description" content="Mainsail is the popular web interface for Klipper." />
+        <title>Cupertino</title>
+        <meta name="description" content="Cupertino is the web interface for your Klipper 3D printer." />
 
         <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png" />
-        <meta name="theme-color" content="#121212" />
+        <meta name="theme-color" content="#F2F2F7" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="apple-mobile-web-app-title" content="Mainsail" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Cupertino" />
         <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/apple-touch-icon-180x180.png" />
-        <link rel="mask-icon" href="img/icons/safari-pinned-tab.svg" color="#d51f26" />
+        <link rel="mask-icon" href="img/icons/safari-pinned-tab.svg" color="#007AFF" />
         <meta name="msapplication-TileImage" content="/img/icons/mstile-150x150.png" />
-        <meta name="msapplication-TileColor" content="#d51f26" />
+        <meta name="msapplication-TileColor" content="#007AFF" />
 
         <script type="module" src="/src/main.ts"></script>
     </head>
-    <body style="background-color: #121212">
+    <body style="background-color: #f2f2f7">
+        <div id="app"></div>
+        <pre
+            id="__boot_error"
+            style="position:fixed;top:0;left:0;right:0;margin:0;padding:12px 16px;background:#1d1d1f;color:#fff;font:12px/1.45 -apple-system,BlinkMacSystemFont,'SF Mono',monospace;white-space:pre-wrap;z-index:99999;display:none;border-bottom:1px solid #333;max-height:60vh;overflow:auto;"
+        ></pre>
+        <div
+            id="__boot_status"
+            style="position:fixed;top:8px;left:50%;transform:translateX(-50%);padding:6px 14px;background:rgba(0,0,0,0.04);color:#8e8e93;font:13px/1.4 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',sans-serif;letter-spacing:-0.01em;border-radius:999px;z-index:99998;pointer-events:none;transition:opacity .3s ease;"
+        >Cupertino</div>
+        <script>
+            (function () {
+                var el = document.getElementById('__boot_error')
+                var status = document.getElementById('__boot_status')
+                function show(msg) {
+                    if (status) status.style.opacity = '0'
+                    if (!el) return
+                    el.style.display = 'block'
+                    el.textContent = (el.textContent ? el.textContent + '\n\n' : '') + msg
+                }
+                window.addEventListener('error', function (e) {
+                    show('[error] ' + (e.message || e) + (e.filename ? '\n  at ' + e.filename + ':' + e.lineno + ':' + e.colno : '') + (e.error && e.error.stack ? '\n' + e.error.stack : ''))
+                })
+                window.addEventListener('unhandledrejection', function (e) {
+                    var r = e.reason
+                    show('[unhandledrejection] ' + (r && r.message ? r.message : r) + (r && r.stack ? '\n' + r.stack : ''))
+                })
+                // Hide the status pill as soon as the app mounts.
+                window.addEventListener('vue-mounted', function () {
+                    if (status) status.style.opacity = '0'
+                })
+            })()
+        </script>
         <noscript>
             <strong>
                 We're sorry but Mainsail doesn't work properly without JavaScript enabled. Please enable it to continue.

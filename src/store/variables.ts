@@ -1,9 +1,9 @@
 import { KlipperRepos, Theme } from '@/store/types'
 
-export const defaultMode = 'dark'
+export const defaultMode = 'light'
 export const defaultTheme = 'mainsail'
-export const defaultLogoColor = '#D41216'
-export const defaultPrimaryColor = '#2196f3'
+export const defaultLogoColor = '#007AFF'
+export const defaultPrimaryColor = '#007AFF'
 export const defaultBigThumbnailBackground = '#1e1e1e'
 
 export const minKlipperVersion = 'v0.11.0-257'

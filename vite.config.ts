@@ -16,13 +16,13 @@ const PWAConfig: Partial<VitePWAOptions> = {
     registerType: 'autoUpdate',
     includeAssets: ['fonts/**/*.woff2', 'img/**/*.svg', 'img/**/*.png'],
     manifest: {
-        name: 'Mainsail',
-        short_name: 'Mainsail',
+        name: 'Cupertino',
+        short_name: 'Cupertino',
         description: 'Web interface for Klipper 3D printer firmware',
-        theme_color: '#D51F26',
+        theme_color: '#F2F2F7',
         display: 'standalone',
         start_url: '/',
-        background_color: '#121212',
+        background_color: '#F2F2F7',
         icons: [
             {
                 src: '/img/icons/icon-192.png',
@@ -65,9 +65,11 @@ const PWAConfig: Partial<VitePWAOptions> = {
         ],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
     },
-    /* enable sw on development */
+    /* keep the service worker out of the dev server — a stale SW precache from
+       earlier runs can serve a broken bundle and make the page unopenable.
+       It is still generated for production builds. */
     devOptions: {
-        enabled: true,
+        enabled: false,
         type: 'module',
         suppressWarnings: true,
     },

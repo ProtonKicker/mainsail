@@ -31,8 +31,21 @@ import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import { DatasetComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
 
 import { defaultMode } from './store/variables'
+import { installMockMoonraker } from './plugins/mockMoonraker'
 
 Vue.config.productionTip = false
+
+// Surface Vue render/handler errors into the on-page diagnostic banner so
+// blank-page failures are visible (dev/preview only).
+Vue.config.errorHandler = (err, _vm, info) => {
+    const message = err instanceof Error ? `${err.name}: ${err.message}\n${err.stack ?? ''}` : String(err)
+    const banner = document.getElementById('__boot_error')
+    if (banner) {
+        banner.style.display = 'block'
+        banner.textContent = (banner.textContent ? banner.textContent + '\n\n' : '') + `[vue ${info}] ${message}`
+    }
+    window.console.error('[vue ' + info + ']', err)
+}
 
 Vue.directive('observe-visibility', ObserveVisibility)
 
@@ -56,6 +69,16 @@ use([SVGRenderer, LineChart, BarChart, LegendComponent, PieChart, DatasetCompone
 Vue.component('EChart', ECharts)
 
 const initLoad = async () => {
+    // Demo helper: serve a fake Moonraker backend so the UI can be explored
+    // without a real Klipper + Moonraker instance. The mock is the default
+    // because this Cupertino variant is a standalone demo. Opt out by
+    // passing `?moonraker=real` if you want to talk to an actual backend.
+    const params = new URLSearchParams(window.location.search)
+    const wantMock = params.get('moonraker') !== 'real'
+    if (wantMock) {
+        installMockMoonraker()
+    }
+
     try {
         // get base url. by default, it is '/'
         const base = import.meta.env.BASE_URL ?? '/'
@@ -90,5 +113,8 @@ initLoad().then(() =>
         store,
         i18n,
         render: (h) => h(App),
+        mounted() {
+            window.dispatchEvent(new Event('vue-mounted'))
+        },
     }).$mount('#app')
 )

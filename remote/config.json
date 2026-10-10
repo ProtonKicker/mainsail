@@ -1,5 +1,6 @@
 {
     "defaultLocale": "en",
+    "defaultMode": "light",
     "defaultTheme": "dark",
     "hostname": null,
     "port": null,
