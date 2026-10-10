@@ -1,0 +1,306 @@
+/*
+ * Pebble Cheese — a light-weight, Apple/Google inspired design layer for Mainsail.
+ *
+ * Principles:
+ *  - Generous rounded corners and soft shadows for a modern, tactile feel.
+ *  - Subtle, performant transitions (transform/opacity only where possible).
+ *  - White/grey surfaces paired with a warm yellow/cream accent.
+ *  - Respects both the dark and the light Vuetify theme.
+ *
+ * This file is intentionally kept small and DOM-agnostic so it stays cheap on
+ * low-power devices while restyling the whole interface.
+ */
+
+/* Shared design tokens */
+:root {
+    --pc-radius-sm: 10px;
+    --pc-radius-md: 14px;
+    --pc-radius-lg: 20px;
+    --pc-radius-round: 28px;
+
+    --pc-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.14);
+    --pc-shadow-tiny: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --pc-shadow-accent: 0 6px 22px rgba(201, 162, 39, 0.35);
+
+    --pc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --pc-dur: 240ms;
+}
+
+/* Smooth, animations-friendly default states */
+.theme--dark {
+    --pc-surface: #1c1f24;
+    --pc-surface-hover: #24272d;
+    --pc-divider: rgba(255, 255, 255, 0.1);
+    --pc-text-muted: rgba(255, 255, 255, 0.6);
+}
+.theme--light {
+    --pc-surface: #ffffff;
+    --pc-surface-hover: #f6f7f9;
+    --pc-divider: rgba(0, 0, 0, 0.08);
+    --pc-text-muted: rgba(0, 0, 0, 0.55);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Buttons & interactive controls become soft, pill-like, and spring via scale */
+.v-btn {
+    text-transform: none;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    border-radius: var(--pc-radius-round) !important;
+    transition:
+        background-color var(--pc-dur) var(--pc-ease),
+        box-shadow var(--pc-dur) var(--pc-ease),
+        color var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease);
+    will-change: transform;
+}
+
+.v-btn:not(.v-btn--disabled):active {
+    transform: scale(0.96);
+}
+
+/* Icon-only buttons and toolbar icon buttons keep a contained square, still rounded */
+.v-btn.v-btn--icon {
+    border-radius: 50% !important;
+}
+
+/* Primary buttons get a warm gradient + glow */
+.v-btn.primary:not(.v-btn--outlined):not(.v-btn--text),
+.v-btn--contained.primary {
+    background-image: linear-gradient(135deg, #e3c64f 0%, #c9a227 100%) !important;
+    box-shadow: var(--pc-shadow-accent);
+    color: #2a2005 !important;
+    transition:
+        box-shadow var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease),
+        filter var(--pc-dur) var(--pc-ease);
+}
+.v-btn.primary:not(.v-btn--disabled):hover {
+    filter: brightness(1.04);
+    box-shadow: 0 8px 26px rgba(201, 162, 39, 0.45);
+}
+
+/* Cards (which power Mainsail panels) get rounded corners and soft shadows */
+.v-card {
+    border-radius: var(--pc-radius-md) !important;
+    box-shadow: var(--pc-shadow-soft) !important;
+    border: 1px solid var(--pc-divider);
+    transition:
+        box-shadow var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease);
+    overflow: hidden;
+}
+.theme--dark .v-card {
+    background-color: var(--pc-surface);
+}
+.theme--light .v-card {
+    background-color: var(--pc-surface);
+}
+
+.v-card:hover {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Panel toolbars sit nicely inside the rounded cards */
+.v-card .panel-toolbar,
+.v-card > .v-toolbar {
+    background-color: transparent !important;
+}
+.v-card .subheading {
+    font-weight: 600;
+    letter-spacing: 0.1px;
+}
+
+/* The topbar becomes a contained, floating, frosted pill bar */
+header.topbar.v-app-bar {
+    background-color: transparent !important;
+}
+.theme--dark header.topbar.v-app-bar {
+    background: rgba(28, 31, 36, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+}
+.theme--light header.topbar.v-app-bar {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+}
+header.topbar.v-app-bar .v-toolbar__content {
+    max-width: 1800px;
+    margin: 0 auto;
+}
+header.topbar .v-toolbar__content {
+    border-bottom: 1px solid var(--pc-divider);
+}
+.theme--dark header.topbar.v-app-bar {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+.theme--light header.topbar.v-app-bar {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Sidebar: frosted surface, softer nav items with pill active state */
+.v-navigation-drawer .v-navigation-drawer__content {
+    padding-bottom: 1em;
+}
+.theme--dark .v-navigation-drawer {
+    background: rgba(20, 22, 26, 0.92);
+    backdrop-filter: saturate(150%) blur(14px);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+}
+.theme--light .v-navigation-drawer {
+    background: rgba(248, 249, 251, 0.94);
+    backdrop-filter: saturate(150%) blur(14px);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+}
+
+nav ul.navi .nav-link {
+    border-radius: var(--pc-radius-sm) !important;
+    margin: 0.3em 0.9em;
+    transition:
+        background-color var(--pc-dur) var(--pc-ease),
+        color var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease);
+}
+.theme--light nav ul.navi .nav-link {
+    color: rgba(0, 0, 0, 0.85);
+}
+.theme--light nav ul.navi .nav-link > i.v-icon {
+    color: rgba(0, 0, 0, 0.7);
+}
+.theme--light nav ul.navi .nav-link:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+.theme--dark nav ul.navi .nav-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+nav ul.navi .nav-link.router-link-active,
+nav ul.navi li.active > .nav-link {
+    background: linear-gradient(135deg, #e3c64f 0%, #c9a227 100%) !important;
+    color: #2a2005 !important;
+    box-shadow: var(--pc-shadow-accent);
+}
+.theme--light nav ul.navi .nav-link.router-link-active > i.v-icon,
+nav ul.navi li.active > .nav-link > i.v-icon {
+    color: #2a2005;
+}
+
+/* Text fields & inputs: softer, rounded */
+.v-text-field .v-input__control .v-input__slot,
+.v-input--text-field .v-input__control .v-input__slot,
+.v-text-field > .v-input__control > .v-input__slot {
+    border-radius: var(--pc-radius-sm) !important;
+}
+.v-text-field.is-focused .v-input__control .v-input__slot,
+.v-text-field:focus-within .v-input__control .v-input__slot {
+    border-color: var(--color-primary) !important;
+}
+
+/* Dialog windows: big radii, smooth spring entrance */
+.v-dialog > .v-card {
+    border-radius: var(--pc-radius-lg) !important;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35) !important;
+}
+.v-dialog .v-card__title {
+    font-weight: 700;
+    letter-spacing: 0.1px;
+}
+
+/* Slide / fade nicer */
+.v-dialog__content .v-dialog,
+.v-bottom-sheet .v-sheet {
+    transition: transform var(--pc-dur) var(--pc-ease) !important;
+}
+
+/* Menus (top-right wrenches, notification drawers, dropdowns) */
+.v-menu__content .v-list,
+.v-sheet.menuable__content__active {
+    border-radius: var(--pc-radius-sm) !important;
+}
+.v-menu__content .v-list-item {
+    border-radius: var(--pc-radius-sm);
+    transition:
+        background-color var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease);
+}
+.v-menu__content .v-list-item:hover {
+    background-color: var(--pc-surface-hover);
+}
+
+/* Tabs */
+.v-tabs .v-tab {
+    border-radius: var(--pc-radius-round) !important;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+.v-tabs-slider-wrapper {
+    height: 3px !important;
+}
+
+/* Sliders are a big part of Mainsail (toolhead, temps) */
+.v-slider__track-container,
+.v-slider__track {
+    border-radius: var(--pc-radius-round);
+}
+.v-slider__thumb {
+    transition: transform var(--pc-dur) var(--pc-ease) !important;
+}
+
+/* Chips and badges */
+.theme--light .v-chip,
+.v-chip {
+    border-radius: var(--pc-radius-round) !important;
+    font-weight: 500;
+}
+
+/* ECharts tooltips and the webcam overlay fit the language */
+.apexcharts-tooltip,
+.echarts-tooltip {
+    border-radius: var(--pc-radius-sm) !important;
+}
+
+/* OverlayScrollbars: thinner, rounded handles */
+.os-scrollbar-handle {
+    border-radius: 10px !important;
+}
+
+/* Progress bars: softer, rounded */
+.v-progress-linear__bar__determinate,
+.v-progress-linear__bar__indeterminate,
+.v-progress-linear__indeterminate {
+    border-radius: var(--pc-radius-round);
+}
+
+/* List items used throughout the console/files pages */
+.v-list-item,
+.v-list-group__items .v-list-item {
+    border-radius: var(--pc-radius-sm);
+    transition:
+        background-color var(--pc-dur) var(--pc-ease),
+        transform var(--pc-dur) var(--pc-ease);
+}
+.source-item,
+.main-nav .v-list-item,
+.v-list-item:not(.v-list-item--active):hover {
+    background-color: var(--pc-surface-hover) !important;
+}
+
+/* Console, gcode viewer containers */
+.console,
+.mainsail-editor {
+    border-radius: var(--pc-radius-sm);
+}
+
+/* Keep animations lightweight: no heavy blur/filter on children of huge lists */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
