@@ -3,15 +3,16 @@
         ref="gcodeCommandField"
         v-model="gcode"
         :items="items"
-        :label="$t('Panels.MiniconsolePanel.SendCode')"
+        :placeholder="$t('Panels.MiniconsolePanel.SendCode')"
         solo
+        flat
         class="gcode-command-field"
         autocomplete="off"
         no-resize
         auto-grow
         :rows="rows"
         hide-details
-        outlined
+        background-color="#f1f3f4"
         dense
         :prepend-icon="isTouchDevice ? mdiChevronDoubleRight : ''"
         :append-icon="mdiSend"

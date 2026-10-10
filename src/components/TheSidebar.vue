@@ -12,19 +12,19 @@
 
         <overlay-scrollbars class="nav-scrollbar">
             <v-list class="pr-0 pt-0 ml-0">
-                <!-- Google Drive Style Hero Button -->
-                <v-list-item class="px-4 py-6 mb-4">
+                <!-- Google Style Hero Button -->
+                <v-list-item class="px-3 pt-5 pb-4 mb-2">
                     <v-btn
                         large
                         rounded
-                        elevation="2"
-                        class="pc-new-button px-6"
-                        color="white"
+                        elevation="0"
+                        class="pc-new-button px-5"
+                        color="amber darken-1"
                         @click.stop="openPrinterSelector">
-                        <v-avatar size="24" class="mr-3">
-                            <mainsail-logo :color="'#c9a227'" style="width: 24px; height: 24px;" />
+                        <v-avatar size="22" class="mr-3">
+                            <mainsail-logo :color="'#2a2005'" style="width: 22px; height: 22px;" />
                         </v-avatar>
-                        <span class="text-h6 font-weight-medium grey--text text--darken-3" style="letter-spacing: -0.5px !important;">Pebble Cheese</span>
+                        <span class="text-subtitle-1 font-weight-medium" style="color: #2a2005; letter-spacing: 0px !important;">Pebble Cheese</span>
                     </v-btn>
                 </v-list-item>
 

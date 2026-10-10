@@ -1,12 +1,12 @@
 <template>
     <div class="d-flex flex-column">
-        <v-row :class="consoleDirection === 'table' ? 'order-0' : 'order-1 mt-3'">
+        <v-row :class="consoleDirection === 'table' ? 'order-0' : 'order-1'">
             <v-col>
                 <console-textarea ref="gcodeCommandField" />
             </v-col>
 
             <v-col class="col-auto d-flex align-center">
-                <v-btn class="mr-3 px-2 minwidth-0" color="lightgray" @click="clearConsole">
+                <v-btn class="mr-1 px-2 minwidth-0" color="lightgray" :icon="true" @click="clearConsole">
                     <v-icon>{{ mdiTrashCan }}</v-icon>
                 </v-btn>
                 <command-help-modal @onCommand="commandClick($event)" />
@@ -16,7 +16,7 @@
                     :close-on-content-click="false"
                     :title="$t('Console.SetupConsole')">
                     <template #activator="{ on, attrs }">
-                        <v-btn class="ml-3 px-2 minwidth-0" color="lightgray" v-bind="attrs" v-on="on">
+                        <v-btn class="ml-1 px-2 minwidth-0" color="lightgray" :icon="true" v-bind="attrs" v-on="on">
                             <v-icon>{{ mdiCog }}</v-icon>
                         </v-btn>
                     </template>

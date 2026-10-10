@@ -1,13 +1,10 @@
 <template>
     <v-row>
-        <v-col class="col-12 py-2 d-flex align-center">
-            <span>
-                <b class="mr-1">{{ $t('Files.CurrentPath') }}:</b>
-                <path-navigation
-                    :path="currentPath"
-                    :base-directory-label="'/gcodes'"
-                    :on-segment-click="clickPathNavGoToDirectory" />
-            </span>
+        <v-col class="col-12 py-1 d-flex align-center">
+            <path-navigation
+                :path="currentPath"
+                :base-directory-label="'/gcodes'"
+                :on-segment-click="clickPathNavGoToDirectory" />
             <v-spacer />
             <v-tooltip v-if="disk_usage !== null" top>
                 <template #activator="{ on, attrs }">

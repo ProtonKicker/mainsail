@@ -74,80 +74,76 @@ body,
 
 /* ------------------- Scrollbars: ultra-clean, rounded, tonal ------------------- */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-track {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.12);
     background-clip: content-box;
 }
 
-/* OverlayScrollbars handle */
+/* OverlayScrollbars handle - Pebble Cheese specific */
 .os-scrollbar-handle {
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
     border-radius: 10px !important;
-    opacity: 1 !important;
-    width: 6px !important;
+    opacity: 0.6 !important;
+    width: 4px !important;
 }
 .os-scrollbar-handle:hover {
-    background: rgba(0, 0, 0, 0.15) !important;
+    background: rgba(0, 0, 0, 0.12) !important;
+    opacity: 1 !important;
 }
 .os-theme-dark > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, 0.05) !important;
 }
 
 /* ------------------- Buttons: soft, pill, tactile ------------------- */
 .v-btn {
     text-transform: none;
-    font-weight: 600;
-    letter-spacing: 0.2px;
+    font-weight: 500;
+    letter-spacing: 0.25px;
     border-radius: var(--pc-radius-round) !important;
-    transition:
-        background-color var(--pc-dur) var(--pc-ease),
-        box-shadow var(--pc-dur) var(--pc-ease),
-        color var(--pc-dur) var(--pc-ease),
-        transform var(--pc-dur) var(--pc-ease),
-        filter var(--pc-dur) var(--pc-ease);
-    will-change: transform;
+    box-shadow: none !important;
+    transition: all var(--pc-dur) var(--pc-ease);
 }
 .v-btn:not(.v-btn--disabled):active {
-    transform: scale(0.95);
+    transform: scale(0.96);
+    background-color: rgba(0, 0, 0, 0.05) !important;
 }
 .v-btn.v-btn--icon {
     border-radius: 50% !important;
-}
-.v-btn:not(.v-btn--disabled):hover .v-icon {
-    transform: translateY(-1px);
-}
-.v-btn .v-icon {
-    transition: transform 200ms var(--pc-ease);
 }
 
 /* Primary / contained buttons get the warm gradient + soft glow */
 .v-btn.primary:not(.v-btn--outlined):not(.v-btn--text),
 .v-btn--contained.primary {
     background-image: linear-gradient(135deg, #e6c950 0%, #c9a227 100%) !important;
-    box-shadow: var(--pc-shadow-accent);
+    box-shadow: var(--pc-shadow-accent) !important;
     color: #2a2005 !important;
 }
 .v-btn.primary:not(.v-btn--disabled):hover {
     filter: brightness(1.05);
-    box-shadow: 0 12px 30px rgba(201, 162, 39, 0.42);
+    box-shadow: 0 12px 30px rgba(201, 162, 39, 0.42) !important;
 }
 
-/* Outlined / flat buttons: tonal surface pill */
-.v-btn--outlined {
-    border-color: var(--pc-divider) !important;
-    background-color: var(--pc-surface-hover) !important;
+/* Emergency button: Google-style warning chip */
+header.topbar .v-btn.emergency-button {
+    background-color: #fce8e6 !important;
+    color: #d93025 !important;
+    border: 1px solid transparent !important;
+}
+header.topbar .v-btn.emergency-button:hover {
+    background-color: #fad2cf !important;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3) !important;
 }
 
 /* ------------------- Floating tonal cards / panels ------------------- */
@@ -269,11 +265,6 @@ body,
     color: var(--pc-text-muted);
 }
 
-/* Remove individual hero gradients for a cleaner white look */
-.pc-hero-files, .pc-hero-console, .pc-hero-machine, .pc-hero-webcam {
-    background: #ffffff !important;
-}
-
 /* ------------------- Topbar: floating rounded app bar ------------------- */
 header.topbar.v-app-bar {
     background-color: #ffffff !important;
@@ -293,25 +284,10 @@ header.topbar .v-btn.button-min-width-auto:not(.v-btn--icon) {
     padding: 0 16px;
     height: 40px !important;
 }
-header.topbar .v-btn.upload-and-start-button {
-    background-image: linear-gradient(135deg, #e6c950 0%, #c9a227 100%) !important;
-    color: #2a2005 !important;
-    box-shadow: var(--pc-shadow-accent);
-}
-header.topbar .v-btn.save-config-button {
-    background-color: var(--pc-surface-hover) !important;
-}
-header.topbar .v-btn.emergency-button {
-    background-color: rgba(229, 57, 53, 0.12) !important;
-    color: #d32f2f !important;
-}
 
 /* ------------------- Sidebar: clean frosted rail ------------------- */
 .v-navigation-drawer {
     border-right: 1px solid var(--pc-divider) !important;
-    background-color: var(--pc-surface) !important;
-}
-.theme--light .v-navigation-drawer {
     background-color: #ffffff !important;
 }
 
@@ -335,21 +311,23 @@ header.topbar .v-btn.emergency-button {
     color: #c9a227 !important;
 }
 
-.theme--light .v-navigation-drawer .v-list .v-list-item:not(.v-list-item--active):hover {
+.v-navigation-drawer .v-list .v-list-item:not(.v-list-item--active):hover {
     background-color: #f1f3f4 !important;
 }
 
-/* Sidebar "New" button */
-.pc-new-button {
+/* Sidebar "New" / hero button — color-filled accent pill (Google hero style) */
+.pc-new-button.v-btn {
     text-transform: none !important;
-    height: 56px !important;
+    height: 52px !important;
     border-radius: 16px !important;
-    background-color: #ffffff !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
-    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    background-image: linear-gradient(135deg, #e6c950 0%, #c9a227 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.2s !important;
 }
-.pc-new-button:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.23) !important;
+.pc-new-button.v-btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    transform: translateY(-1px) !important;
 }
 
 /* Topbar Search Bar */
@@ -383,6 +361,16 @@ header.topbar .v-btn.emergency-button {
 }
 .v-navigation-drawer--mini-variant {
     transition: width 0.3s var(--pc-ease) !important;
+}
+
+/* Machine Tab Refinements */
+.v-card.config-files-panel,
+.v-card.system-panel,
+.v-card.update-panel {
+    border-radius: 24px !important;
+}
+.v-list-item--link:hover {
+    background-color: var(--pc-surface-hover) !important;
 }
 
 /* ------------------- Inputs ------------------- */
@@ -443,9 +431,6 @@ header.topbar .v-btn.emergency-button {
 .echarts-tooltip {
     border-radius: var(--pc-radius-sm) !important;
 }
-.os-scrollbar-handle {
-    border-radius: 10px !important;
-}
 .v-progress-linear__bar__determinate,
 .v-progress-linear__bar__indeterminate,
 .v-progress-linear__indeterminate {
@@ -477,4 +462,79 @@ header.topbar .v-btn.emergency-button {
         animation-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* ------------------- Pebble Cheese: Airy-but-tight layer -------------------
+ * Keep every control functional but favor whitespace-over-chrome (Material 3):
+ * grey canvas, white floating surfaces, low shadows, calm gutters. */
+.v-container#page-container {
+    max-width: 1600px;
+}
+#page-container > .v-row {
+    margin-top: 0;
+}
+/* Slim panel toolbars */
+.v-card.panel .panel-toolbar.v-toolbar {
+    min-height: 44px !important;
+}
+.v-card.panel .v-toolbar__content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.v-card.panel .panel-toolbar .subheading {
+    font-size: 15px;
+}
+/* Tighter default gutter between stacked panels */
+.v-card.panel {
+    margin-bottom: 16px !important;
+}
+@media (min-width: 960px) {
+    .v-card.panel {
+        margin-bottom: 20px !important;
+    }
+}
+/* Drop the hard divider under file table header rows for a flat list */
+.gcode-files-panel .v-card__text {
+    padding-bottom: 0 !important;
+}
+/* Dashboard hero: calm breathing room above, between tiles, and below */
+.pc-dashboard-hero {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+.pc-dashboard-hero > .v-col {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+}
+.pc-dashboard-hero .pc-hero-tile {
+    height: calc(100% - 8px);
+}
+/* Card internals: let content breathe, keep headers calm */
+.v-card .v-card__text {
+    padding: 16px 18px;
+}
+
+/* Console input: flat rounded pill, no outline chrome */
+.gcode-command-field.v-textarea .v-input__control {
+    border-radius: 16px !important;
+    overflow: hidden;
+}
+.gcode-command-field.v-textarea .v-input__slot {
+    box-shadow: none !important;
+}
+/* Compress console log rows */
+.consoleTableRow .col {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+/* G-Code header action buttons: icon-only, flat, aligned */
+.gcode-files-panel .gcode-files-panel-header .v-input,
+.gcodefiles-panel-header .v-text-field {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+.gcodefiles-panel-header .v-text-field .v-input__slot {
+    box-shadow: none !important;
 }
