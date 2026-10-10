@@ -1,50 +1,111 @@
 /*
- * Pebble Cheese — a light-weight, Apple/Google inspired design layer for Mainsail.
+ * Pebble Cheese — a light-weight, Apple/Google (Material 3) inspired design
+ * layer that reskins Mainsail end-to-end.
  *
- * Principles:
- *  - Generous rounded corners and soft shadows for a modern, tactile feel.
- *  - Subtle, performant transitions (transform/opacity only where possible).
- *  - White/grey surfaces paired with a warm yellow/cream accent.
- *  - Respects both the dark and the light Vuetify theme.
- *
- * This file is intentionally kept small and DOM-agnostic so it stays cheap on
- * low-power devices while restyling the whole interface.
+ * Goals:
+ *  - A soft, tonal, floating-card interface: no hard Mainsail scaffolding.
+ *  - White/grey surfaces with a warm yellow/cream accent ("Pebble Cheese").
+ *  - Larger radii, feather-soft shadows, and gentle, performant motion.
+ *  - Cheap on low-power devices: transform/opacity transitions only, no heavy
+ *    filters on large sub-trees.
+ *  - Fully respects the Vuetify dark and light themes.
  */
 
-/* Shared design tokens */
+/* ------------------------- Design tokens ------------------------- */
 :root {
-    --pc-radius-sm: 10px;
-    --pc-radius-md: 14px;
-    --pc-radius-lg: 20px;
-    --pc-radius-round: 28px;
+    --pc-radius-sm: 12px;
+    --pc-radius-md: 18px;
+    --pc-radius-lg: 24px;
+    --pc-radius-round: 999px;
 
-    --pc-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.14);
-    --pc-shadow-tiny: 0 1px 3px rgba(0, 0, 0, 0.12);
-    --pc-shadow-accent: 0 6px 22px rgba(201, 162, 39, 0.35);
+    --pc-shadow-soft: 0 6px 24px rgba(0, 0, 0, 0.08);
+    --pc-shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.12);
+    --pc-shadow-accent: 0 8px 24px rgba(201, 162, 39, 0.32);
 
     --pc-ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --pc-dur: 240ms;
+    --pc-dur: 260ms;
 }
 
-/* Smooth, animations-friendly default states */
-.theme--dark {
-    --pc-surface: #1c1f24;
-    --pc-surface-hover: #24272d;
-    --pc-divider: rgba(255, 255, 255, 0.1);
-    --pc-text-muted: rgba(255, 255, 255, 0.6);
-}
+/* Theme-driven tokens - Aggressively light for "Pebble Cheese" */
+.theme--dark,
 .theme--light {
     --pc-surface: #ffffff;
-    --pc-surface-hover: #f6f7f9;
-    --pc-divider: rgba(0, 0, 0, 0.08);
-    --pc-text-muted: rgba(0, 0, 0, 0.55);
+    --pc-surface-2: #f8f9fa;
+    --pc-surface-hover: #f1f3f4;
+    --pc-divider: rgba(0, 0, 0, 0.06);
+    --pc-text-muted: #5f6368;
+    --pc-canvas: #f8f9fa;
+    --pc-accent: #c9a227;
+    --pc-accent-soft: #fdf2d5;
+}
+
+/* Force light mode globally */
+.v-application.theme--dark,
+.v-application.theme--light {
+    background-color: var(--pc-surface-2) !important;
+    color: #202124 !important;
+}
+
+.theme--dark.v-card,
+.theme--light.v-card {
+    background-color: #ffffff !important;
+    color: #202124 !important;
 }
 
 html {
     scroll-behavior: smooth;
 }
 
-/* Buttons & interactive controls become soft, pill-like, and spring via scale */
+body,
+.v-application {
+    font-family: 'Google Sans', 'Roboto', sans-serif !important;
+    font-feature-settings: normal;
+}
+
+/* ------------------- App canvas: soft gradient wash ------------------- */
+.v-application--wrap,
+#content {
+    background-color: var(--pc-surface-2) !important;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(201, 162, 39, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(91, 134, 229, 0.03) 0px, transparent 50%) !important;
+    background-attachment: fixed;
+}
+
+/* ------------------- Scrollbars: ultra-clean, rounded, tonal ------------------- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.15);
+    background-clip: content-box;
+}
+
+/* OverlayScrollbars handle */
+.os-scrollbar-handle {
+    background: rgba(0, 0, 0, 0.08) !important;
+    border-radius: 10px !important;
+    opacity: 1 !important;
+    width: 6px !important;
+}
+.os-scrollbar-handle:hover {
+    background: rgba(0, 0, 0, 0.15) !important;
+}
+.os-theme-dark > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+    background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ------------------- Buttons: soft, pill, tactile ------------------- */
 .v-btn {
     text-transform: none;
     font-weight: 600;
@@ -54,141 +115,277 @@ html {
         background-color var(--pc-dur) var(--pc-ease),
         box-shadow var(--pc-dur) var(--pc-ease),
         color var(--pc-dur) var(--pc-ease),
-        transform var(--pc-dur) var(--pc-ease);
+        transform var(--pc-dur) var(--pc-ease),
+        filter var(--pc-dur) var(--pc-ease);
     will-change: transform;
 }
-
 .v-btn:not(.v-btn--disabled):active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
-
-/* Icon-only buttons and toolbar icon buttons keep a contained square, still rounded */
 .v-btn.v-btn--icon {
     border-radius: 50% !important;
 }
+.v-btn:not(.v-btn--disabled):hover .v-icon {
+    transform: translateY(-1px);
+}
+.v-btn .v-icon {
+    transition: transform 200ms var(--pc-ease);
+}
 
-/* Primary buttons get a warm gradient + glow */
+/* Primary / contained buttons get the warm gradient + soft glow */
 .v-btn.primary:not(.v-btn--outlined):not(.v-btn--text),
 .v-btn--contained.primary {
-    background-image: linear-gradient(135deg, #e3c64f 0%, #c9a227 100%) !important;
+    background-image: linear-gradient(135deg, #e6c950 0%, #c9a227 100%) !important;
     box-shadow: var(--pc-shadow-accent);
     color: #2a2005 !important;
-    transition:
-        box-shadow var(--pc-dur) var(--pc-ease),
-        transform var(--pc-dur) var(--pc-ease),
-        filter var(--pc-dur) var(--pc-ease);
 }
 .v-btn.primary:not(.v-btn--disabled):hover {
-    filter: brightness(1.04);
-    box-shadow: 0 8px 26px rgba(201, 162, 39, 0.45);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 30px rgba(201, 162, 39, 0.42);
 }
 
-/* Cards (which power Mainsail panels) get rounded corners and soft shadows */
+/* Outlined / flat buttons: tonal surface pill */
+.v-btn--outlined {
+    border-color: var(--pc-divider) !important;
+    background-color: var(--pc-surface-hover) !important;
+}
+
+/* ------------------- Floating tonal cards / panels ------------------- */
 .v-card {
-    border-radius: var(--pc-radius-md) !important;
-    box-shadow: var(--pc-shadow-soft) !important;
-    border: 1px solid var(--pc-divider);
-    transition:
-        box-shadow var(--pc-dur) var(--pc-ease),
-        transform var(--pc-dur) var(--pc-ease);
+    border-radius: var(--pc-radius-lg) !important;
+    border: none !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15) !important;
     overflow: hidden;
+    transition: box-shadow var(--pc-dur) var(--pc-ease), transform var(--pc-dur) var(--pc-ease);
 }
-.theme--dark .v-card {
-    background-color: var(--pc-surface);
-}
-.theme--light .v-card {
-    background-color: var(--pc-surface);
-}
-
 .v-card:hover {
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15) !important;
 }
 
-/* Panel toolbars sit nicely inside the rounded cards */
-.v-card .panel-toolbar,
-.v-card > .v-toolbar {
+/* Panel toolbars: Google-style clean headers */
+.v-card > .v-toolbar,
+.v-card .panel-toolbar {
     background-color: transparent !important;
+    border-bottom: none !important;
 }
 .v-card .subheading {
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.1px;
+    font-size: 16px;
+    color: var(--pc-text-muted);
+}
+.v-card.panel .v-toolbar__content {
+    padding-left: 20px;
+    padding-right: 12px;
+}
+.v-card.panel .v-toolbar__title {
+    gap: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.v-card.panel .v-toolbar__title .v-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1f3f4;
+    color: #5f6368 !important;
 }
 
-/* The topbar becomes a contained, floating, frosted pill bar */
+/* ------------------- G-Code Files Tab: Google Drive List ------------------- */
+.gcode-files-panel .v-data-table {
+    background: transparent !important;
+}
+.gcode-files-panel .v-data-table tr:hover {
+    background-color: var(--pc-surface-hover) !important;
+}
+.gcode-files-panel .v-data-table td {
+    border-bottom: 1px solid var(--pc-divider) !important;
+    height: 56px !important;
+}
+.gcode-files-panel .v-data-table th {
+    border-bottom: 1px solid var(--pc-divider) !important;
+    font-weight: 500 !important;
+    color: var(--pc-text-muted) !important;
+    text-transform: none !important;
+}
+
+/* ------------------- Console Tab: Modern Terminal ------------------- */
+.consoleTable {
+    background: #ffffff !important;
+    padding: 16px;
+}
+.consoleTableRow {
+    border-radius: 8px;
+    margin-bottom: 2px;
+    padding: 4px 12px !important;
+    transition: background-color 0.2s;
+}
+.consoleTableRow:hover {
+    background-color: var(--pc-surface-hover);
+}
+.consoleTableRow .v-list-item__content {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+}
+
+/* ------------------- Dashboard hero tiles ------------------- */
+.pc-dashboard-hero .pc-hero-tile {
+    border-radius: 28px !important;
+    border: none !important;
+    overflow: hidden;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15) !important;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.pc-dashboard-hero .pc-hero-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, .3), 0 4px 8px 3px rgba(60, 64, 67, .15) !important;
+}
+.pc-hero-tile__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px !important;
+}
+.pc-hero-tile__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pc-surface-hover) !important;
+    box-shadow: none !important;
+}
+.pc-hero-tile__title {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    color: var(--pc-text-muted);
+}
+
+/* Remove individual hero gradients for a cleaner white look */
+.pc-hero-files, .pc-hero-console, .pc-hero-machine, .pc-hero-webcam {
+    background: #ffffff !important;
+}
+
+/* ------------------- Topbar: floating rounded app bar ------------------- */
 header.topbar.v-app-bar {
-    background-color: transparent !important;
-}
-.theme--dark header.topbar.v-app-bar {
-    background: rgba(28, 31, 36, 0.85);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid var(--pc-divider) !important;
 }
 .theme--light header.topbar.v-app-bar {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-}
-header.topbar.v-app-bar .v-toolbar__content {
-    max-width: 1800px;
-    margin: 0 auto;
-}
-header.topbar .v-toolbar__content {
-    border-bottom: 1px solid var(--pc-divider);
-}
-.theme--dark header.topbar.v-app-bar {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
-}
-.theme--light header.topbar.v-app-bar {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06) !important;
+    background: #ffffff !important;
 }
 
-/* Sidebar: frosted surface, softer nav items with pill active state */
-.v-navigation-drawer .v-navigation-drawer__content {
-    padding-bottom: 1em;
+/* Topbar action buttons become compact tonal chips */
+header.topbar .v-btn.button-min-width-auto {
+    margin: 0 4px;
+    border-radius: var(--pc-radius-round) !important;
 }
-.theme--dark .v-navigation-drawer {
-    background: rgba(20, 22, 26, 0.92);
-    backdrop-filter: saturate(150%) blur(14px);
-    -webkit-backdrop-filter: saturate(150%) blur(14px);
+header.topbar .v-btn.button-min-width-auto:not(.v-btn--icon) {
+    padding: 0 16px;
+    height: 40px !important;
 }
-.theme--light .v-navigation-drawer {
-    background: rgba(248, 249, 251, 0.94);
-    backdrop-filter: saturate(150%) blur(14px);
-    -webkit-backdrop-filter: saturate(150%) blur(14px);
-}
-
-nav ul.navi .nav-link {
-    border-radius: var(--pc-radius-sm) !important;
-    margin: 0.3em 0.9em;
-    transition:
-        background-color var(--pc-dur) var(--pc-ease),
-        color var(--pc-dur) var(--pc-ease),
-        transform var(--pc-dur) var(--pc-ease);
-}
-.theme--light nav ul.navi .nav-link {
-    color: rgba(0, 0, 0, 0.85);
-}
-.theme--light nav ul.navi .nav-link > i.v-icon {
-    color: rgba(0, 0, 0, 0.7);
-}
-.theme--light nav ul.navi .nav-link:hover {
-    background: rgba(0, 0, 0, 0.06);
-}
-.theme--dark nav ul.navi .nav-link:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-nav ul.navi .nav-link.router-link-active,
-nav ul.navi li.active > .nav-link {
-    background: linear-gradient(135deg, #e3c64f 0%, #c9a227 100%) !important;
+header.topbar .v-btn.upload-and-start-button {
+    background-image: linear-gradient(135deg, #e6c950 0%, #c9a227 100%) !important;
     color: #2a2005 !important;
     box-shadow: var(--pc-shadow-accent);
 }
-.theme--light nav ul.navi .nav-link.router-link-active > i.v-icon,
-nav ul.navi li.active > .nav-link > i.v-icon {
-    color: #2a2005;
+header.topbar .v-btn.save-config-button {
+    background-color: var(--pc-surface-hover) !important;
+}
+header.topbar .v-btn.emergency-button {
+    background-color: rgba(229, 57, 53, 0.12) !important;
+    color: #d32f2f !important;
 }
 
-/* Text fields & inputs: softer, rounded */
+/* ------------------- Sidebar: clean frosted rail ------------------- */
+.v-navigation-drawer {
+    border-right: 1px solid var(--pc-divider) !important;
+    background-color: var(--pc-surface) !important;
+}
+.theme--light .v-navigation-drawer {
+    background-color: #ffffff !important;
+}
+
+.v-navigation-drawer .v-list .v-list-item {
+    border-radius: var(--pc-radius-round);
+    margin: 4px 16px;
+    min-height: 44px;
+    padding: 0 16px;
+}
+
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item {
+    background: #fdf2d5 !important;
+    color: #c9a227 !important;
+    box-shadow: none !important;
+}
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active .v-list-item__icon,
+.v-navigation-drawer .v-list .v-list-item.v-list-item--active .v-list-item__title,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item .v-list-item__icon,
+.v-navigation-drawer .v-list .v-list-item.active-nav-item .v-list-item__title {
+    color: #c9a227 !important;
+}
+
+.theme--light .v-navigation-drawer .v-list .v-list-item:not(.v-list-item--active):hover {
+    background-color: #f1f3f4 !important;
+}
+
+/* Sidebar "New" button */
+.pc-new-button {
+    text-transform: none !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+.pc-new-button:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.23) !important;
+}
+
+/* Topbar Search Bar */
+.pc-search-bar {
+    width: 100%;
+    height: 48px;
+    background-color: #f1f3f4 !important;
+    border-radius: 24px !important;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    border: 1px solid transparent;
+}
+.pc-search-bar:focus-within {
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 1px 0 rgba(65, 69, 73, 0.3), 0 1px 3px 1px rgba(65, 69, 73, 0.15) !important;
+}
+.pc-search-input {
+    font-size: 16px !important;
+}
+.pc-search-input .v-input__slot {
+    box-shadow: none !important;
+    background: transparent !important;
+}
+.pc-search-input input::placeholder {
+    color: #5f6368 !important;
+    opacity: 1;
+}
+
+/* ------------------- Transitions: Google-style Easing ------------------- */
+.v-main {
+    transition: padding-left 0.3s var(--pc-ease) !important;
+}
+.v-navigation-drawer--mini-variant {
+    transition: width 0.3s var(--pc-ease) !important;
+}
+
+/* ------------------- Inputs ------------------- */
 .v-text-field .v-input__control .v-input__slot,
 .v-input--text-field .v-input__control .v-input__slot,
 .v-text-field > .v-input__control > .v-input__slot {
@@ -199,26 +396,18 @@ nav ul.navi li.active > .nav-link > i.v-icon {
     border-color: var(--color-primary) !important;
 }
 
-/* Dialog windows: big radii, smooth spring entrance */
+/* ------------------- Dialogs & menus ------------------- */
 .v-dialog > .v-card {
     border-radius: var(--pc-radius-lg) !important;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35) !important;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32) !important;
 }
 .v-dialog .v-card__title {
-    font-weight: 700;
-    letter-spacing: 0.1px;
+    font-weight: 750;
+    letter-spacing: -0.2px;
 }
-
-/* Slide / fade nicer */
-.v-dialog__content .v-dialog,
-.v-bottom-sheet .v-sheet {
-    transition: transform var(--pc-dur) var(--pc-ease) !important;
-}
-
-/* Menus (top-right wrenches, notification drawers, dropdowns) */
 .v-menu__content .v-list,
 .v-sheet.menuable__content__active {
-    border-radius: var(--pc-radius-sm) !important;
+    border-radius: var(--pc-radius-md) !important;
 }
 .v-menu__content .v-list-item {
     border-radius: var(--pc-radius-sm);
@@ -230,7 +419,7 @@ nav ul.navi li.active > .nav-link > i.v-icon {
     background-color: var(--pc-surface-hover);
 }
 
-/* Tabs */
+/* ------------------- Tabs, sliders, chips, list items ------------------- */
 .v-tabs .v-tab {
     border-radius: var(--pc-radius-round) !important;
     font-weight: 600;
@@ -239,8 +428,6 @@ nav ul.navi li.active > .nav-link > i.v-icon {
 .v-tabs-slider-wrapper {
     height: 3px !important;
 }
-
-/* Sliders are a big part of Mainsail (toolhead, temps) */
 .v-slider__track-container,
 .v-slider__track {
     border-radius: var(--pc-radius-round);
@@ -248,33 +435,22 @@ nav ul.navi li.active > .nav-link > i.v-icon {
 .v-slider__thumb {
     transition: transform var(--pc-dur) var(--pc-ease) !important;
 }
-
-/* Chips and badges */
-.theme--light .v-chip,
 .v-chip {
     border-radius: var(--pc-radius-round) !important;
     font-weight: 500;
 }
-
-/* ECharts tooltips and the webcam overlay fit the language */
 .apexcharts-tooltip,
 .echarts-tooltip {
     border-radius: var(--pc-radius-sm) !important;
 }
-
-/* OverlayScrollbars: thinner, rounded handles */
 .os-scrollbar-handle {
     border-radius: 10px !important;
 }
-
-/* Progress bars: softer, rounded */
 .v-progress-linear__bar__determinate,
 .v-progress-linear__bar__indeterminate,
 .v-progress-linear__indeterminate {
     border-radius: var(--pc-radius-round);
 }
-
-/* List items used throughout the console/files pages */
 .v-list-item,
 .v-list-group__items .v-list-item {
     border-radius: var(--pc-radius-sm);
@@ -287,14 +463,12 @@ nav ul.navi li.active > .nav-link > i.v-icon {
 .v-list-item:not(.v-list-item--active):hover {
     background-color: var(--pc-surface-hover) !important;
 }
-
-/* Console, gcode viewer containers */
 .console,
 .mainsail-editor {
     border-radius: var(--pc-radius-sm);
 }
 
-/* Keep animations lightweight: no heavy blur/filter on children of huge lists */
+/* ------------------- Reduced motion ------------------- */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

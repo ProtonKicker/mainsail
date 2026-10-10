@@ -8,27 +8,46 @@
         clipped
         app
         :style="sidebarCssVars">
-        <template #img>
-            <v-img :src="sidebarBackground" height="100%" />
-        </template>
+        <!-- Removed template #img for a clean Google Drive white look -->
 
         <overlay-scrollbars class="nav-scrollbar">
             <v-list class="pr-0 pt-0 ml-0">
-                <v-list-item
-                    v-if="isMobile"
-                    router
-                    to="/"
-                    :class="mobileLogoClass"
-                    :style="`height: ${topbarHeight}px`"
-                    :ripple="false">
-                    <img v-if="sidebarLogo" :src="sidebarLogo" :style="logoCssVars" class="nav-logo" alt="Logo" />
-                    <mainsail-logo v-else :color="logoColor" :style="logoCssVars" class="nav-logo" :ripple="false" />
-                    <span v-if="navigationStyle !== 'iconsOnly'" class="text-h6 font-weight-regular text-truncate">
-                        {{ printerName }}
-                    </span>
+                <!-- Google Drive Style Hero Button -->
+                <v-list-item class="px-4 py-6 mb-4">
+                    <v-btn
+                        large
+                        rounded
+                        elevation="2"
+                        class="pc-new-button px-6"
+                        color="white"
+                        @click.stop="openPrinterSelector">
+                        <v-avatar size="24" class="mr-3">
+                            <mainsail-logo :color="'#c9a227'" style="width: 24px; height: 24px;" />
+                        </v-avatar>
+                        <span class="text-h6 font-weight-medium grey--text text--darken-3" style="letter-spacing: -0.5px !important;">Pebble Cheese</span>
+                    </v-btn>
                 </v-list-item>
+
                 <sidebar-item v-for="(category, index) in visibleNaviPoints" :key="index" :item="category" />
             </v-list>
+
+            <!-- Storage-like indicator for printer status -->
+            <div class="px-6 py-4 mt-auto">
+                <div class="d-flex align-center justify-space-between mb-2">
+                    <span class="text-caption grey--text text--darken-1">System Health</span>
+                    <span class="text-caption grey--text text--darken-1">Stable</span>
+                </div>
+                <v-progress-linear
+                    value="15"
+                    height="4"
+                    rounded
+                    color="amber darken-2"
+                    background-color="grey lighten-3"
+                ></v-progress-linear>
+                <v-btn text x-small color="primary" class="mt-4 pa-0 text-none" @click="$router.push('/machine')">
+                    Manage resources
+                </v-btn>
+            </div>
         </overlay-scrollbars>
         <template #append>
             <v-list-item class="small-list-item mb-2">
@@ -123,29 +142,28 @@ export default class TheSidebar extends Mixins(NavigationMixin, BaseMixin, Theme
             'justify-center': this.navigationStyle === 'iconsOnly',
         }
     }
+
+    openPrinterSelector() {
+        if (this.countPrinters > 1) {
+            // Logic to open printer selector dialog if needed, 
+            // but here we can just navigate to home or just act as a hero button
+            this.$router.push('/')
+        }
+    }
 }
 </script>
 
 <style scoped>
 .no-text-decoration {
     text-decoration: none;
-    background-color: transparent;
 }
 
-.no-background:before {
-    background-color: rgba(255, 255, 255, 0) !important;
-}
-
-.no-border {
-    border: 0 !important;
+.pc-new-button {
+    letter-spacing: 0.25px;
 }
 
 .nav-logo {
-    height: 32px;
-}
-
-.menu-item-icon {
-    opacity: 0.85;
+    height: 24px;
 }
 
 .nav-scrollbar {

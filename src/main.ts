@@ -31,6 +31,7 @@ import { BarChart, LineChart, PieChart } from 'echarts/charts'
 import { DatasetComponent, GridComponent, LegendComponent, TooltipComponent } from 'echarts/components'
 
 import { defaultMode } from './store/variables'
+import { installMockMoonraker } from './plugins/mockMoonraker'
 
 Vue.config.productionTip = false
 
@@ -56,6 +57,16 @@ use([SVGRenderer, LineChart, BarChart, LegendComponent, PieChart, DatasetCompone
 Vue.component('EChart', ECharts)
 
 const initLoad = async () => {
+    // Demo helper: when running the dev server (or when explicitly requested with
+    // ?moonraker=mock), serve a fake Moonraker backend so the UI can be explored
+    // without a real Klipper + Moonraker instance. Opt out in dev with ?moonraker=real.
+    const wantMock = new URLSearchParams(window.location.search).get('moonraker') === 'mock'
+    if (import.meta.env.DEV || wantMock) {
+        if (new URLSearchParams(window.location.search).get('moonraker') !== 'real') {
+            installMockMoonraker()
+        }
+    }
+
     try {
         // get base url. by default, it is '/'
         const base = import.meta.env.BASE_URL ?? '/'

@@ -3,21 +3,18 @@
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        viewBox="0 0 599.38 523.11"
-        xml:space="preserve">
-        <g>
-            <path
-                :style="'fill:' + color + ';'"
-                d="M382.29,142.98L132.98,522.82L0,522.68L344.3,0l0,0C352.18,49.06,365.2,97.68,382.29,142.98" />
-            <path
-                :style="'fill:' + color + ';'"
-                d="M413.28,213.54L208.5,522.92l132.94,0.19l135.03-206.33l0,0C452.69,284.29,431.53,249.77,413.28,213.54 L413.28,213.54" />
-            <path
-                :style="'fill:' + color + ';'"
-                d="M599.38,447.69l-49.25,75.42L417,522.82l101.6-153.67l0,0C543.48,397.35,570.49,423.61,599.38,447.69 L599.38,447.69z" />
-        </g>
+        viewBox="0 0 64 64"
+        xml:space="preserve"
+        aria-label="Pebble Cheese logo">
+        <!-- Rounded block (wedge) of cheese with Swiss-style holes -->
+        <rect x="4" y="10" width="56" height="44" rx="14" :fill="color" />
+        <!-- Soft bottom thickness for a blocky look -->
+        <rect x="4" y="44" width="56" height="8" rx="4" fill="rgba(0,0,0,0.18)" />
+        <!-- Cheese holes -->
+        <circle cx="20" cy="34" r="7" fill="rgba(0,0,0,0.22)" />
+        <circle cx="42" cy="26" r="5" fill="rgba(0,0,0,0.22)" />
+        <circle cx="44" cy="44" r="4" fill="rgba(0,0,0,0.22)" />
+        <circle cx="26" cy="22" r="3.5" fill="rgba(0,0,0,0.22)" />
     </svg>
 </template>
 

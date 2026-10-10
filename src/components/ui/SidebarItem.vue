@@ -22,7 +22,6 @@
             </template>
             <span>{{ title }}</span>
         </v-tooltip>
-        <v-divider v-if="borderBottom" class="my-1" />
     </div>
 </template>
 
@@ -80,23 +79,14 @@ export default class SidebarItem extends Mixins(BaseMixin) {
 </script>
 
 <style scoped>
-.small-list-item {
-    height: var(--sidebar-menu-item-height);
-}
-
-.active-nav-item {
-    border-right: 4px solid var(--v-primary-base);
-}
-
 .menu-item-icon {
-    opacity: 0.85;
+    transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .menu-item-title {
-    line-height: 30px;
     font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0.85;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.2px;
 }
 </style>

@@ -1,5 +1,47 @@
 <template>
     <div>
+        <v-row class="pc-dashboard-hero gutter-2 mb-3">
+            <v-col cols="6" sm="3">
+                <v-card class="pc-hero-tile pc-hero-files" :to="'/files'" router>
+                    <v-card-text class="pc-hero-tile__body">
+                        <div class="pc-hero-tile__icon">
+                            <v-icon>{{ mdiFileDocumentMultipleOutline }}</v-icon>
+                        </div>
+                        <div class="pc-hero-tile__title">{{ $t('Router.G-Code Files') }}</div>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col cols="6" sm="3">
+                <v-card class="pc-hero-tile pc-hero-console" :to="'/console'" router>
+                    <v-card-text class="pc-hero-tile__body">
+                        <div class="pc-hero-tile__icon">
+                            <v-icon>{{ mdiConsoleLine }}</v-icon>
+                        </div>
+                        <div class="pc-hero-tile__title">{{ $t('Router.Console') }}</div>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col cols="6" sm="3">
+                <v-card class="pc-hero-tile pc-hero-machine" :to="'/config'" router>
+                    <v-card-text class="pc-hero-tile__body">
+                        <div class="pc-hero-tile__icon">
+                            <v-icon>{{ mdiWrench }}</v-icon>
+                        </div>
+                        <div class="pc-hero-tile__title">{{ $t('Router.Machine') }}</div>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col cols="6" sm="3">
+                <v-card class="pc-hero-tile pc-hero-webcam" :to="'/cam'" router>
+                    <v-card-text class="pc-hero-tile__body">
+                        <div class="pc-hero-tile__icon">
+                            <v-icon>{{ mdiWebcam }}</v-icon>
+                        </div>
+                        <div class="pc-hero-tile__title">{{ $t('Router.Webcam') }}</div>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
         <v-row v-if="isMobile">
             <v-col>
                 <status-panel />
@@ -82,6 +124,7 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import { Mixins } from 'vue-property-decorator'
+import { mdiConsoleLine, mdiFileDocumentMultipleOutline, mdiWrench, mdiWebcam } from '@mdi/js'
 import AfcPanel from '@/components/panels/AfcPanel.vue'
 import ExtruderControlPanel from '@/components/panels/ExtruderControlPanel.vue'
 import DashboardMixin from '@/components/mixins/dashboard'
@@ -121,6 +164,11 @@ import WebcamPanel from '@/components/panels/WebcamPanel.vue'
     },
 })
 export default class PageDashboard extends Mixins(DashboardMixin) {
+    mdiConsoleLine = mdiConsoleLine
+    mdiFileDocumentMultipleOutline = mdiFileDocumentMultipleOutline
+    mdiWrench = mdiWrench
+    mdiWebcam = mdiWebcam
+
     get mobileLayout() {
         return this.$store.getters['gui/getPanels']('mobile', 0, true)
     }

@@ -167,9 +167,9 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
         ) as AppRoute
 
         return {
-            'px-3': true,
-            'px-sm-6': true,
-            'py-sm-6': true,
+            'px-4': true,
+            'px-sm-10': true,
+            'py-sm-8': true,
             'mx-auto': true,
             fullscreen: currentRouteOptions?.fullscreen ?? false,
         }
@@ -315,12 +315,13 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
         const favicon =
             'data:image/svg+xml;base64,' +
             window.btoa(`
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 599.38 523.11" xml:space="preserve">
-                <g>
-                    <path style="fill:${this.logoColor};" d="M382.29,142.98L132.98,522.82L0,522.68L344.3,0l0,0C352.18,49.06,365.2,97.68,382.29,142.98"/>
-                    <path style="fill:${this.logoColor};" d="M413.28,213.54L208.5,522.92l132.94,0.19l135.03-206.33l0,0C452.69,284.29,431.53,249.77,413.28,213.54 L413.28,213.54"/>
-                    <path style="fill:${this.logoColor};" d="M599.38,447.69l-49.25,75.42L417,522.82l101.6-153.67l0,0C543.48,397.35,570.49,423.61,599.38,447.69 L599.38,447.69z"/>
-                </g>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                <rect x="2" y="8" width="60" height="48" rx="14" fill="${this.logoColor}"/>
+                <rect x="2" y="46" width="60" height="8" rx="4" fill="rgba(0,0,0,0.18)"/>
+                <circle cx="20" cy="34" r="7" fill="rgba(0,0,0,0.22)"/>
+                <circle cx="42" cy="26" r="5" fill="rgba(0,0,0,0.22)"/>
+                <circle cx="44" cy="44" r="4" fill="rgba(0,0,0,0.22)"/>
+                <circle cx="26" cy="22" r="3.5" fill="rgba(0,0,0,0.22)"/>
             </svg>
         `)
 
@@ -388,6 +389,10 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
     }
 
     mounted(): void {
+        // Force Pebble Cheese Light Mode
+        this.$vuetify.theme.dark = false
+        document.documentElement.className = 'theme--light'
+        
         this.drawFavicon(this.print_percent)
         this.appHeight()
         window.addEventListener('resize', this.appHeight)

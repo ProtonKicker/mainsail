@@ -1,14 +1,29 @@
 <template>
     <div>
-        <v-app-bar app elevate-on-scroll :height="topbarHeight" class="topbar pa-0" clipped-left>
-            <v-app-bar-nav-icon tile @click.stop="naviDrawer = !naviDrawer" />
-            <router-link to="/">
-                <inline-svg v-if="sidebarLogo && isSvgLogo" :src="sidebarLogo" :class="logoClasses" />
-                <img v-else-if="sidebarLogo" :src="sidebarLogo" :class="logoClasses" alt="Logo" />
-                <mainsail-logo v-else :color="logoColor" :class="logoClasses" router to="/" :ripple="false" />
-            </router-link>
-            <v-toolbar-title class="text-no-wrap ml-0 pl-2 mr-2">{{ printerName }}</v-toolbar-title>
-            <printer-selector v-if="countPrinters" />
+        <v-app-bar app flat :height="topbarHeight" class="topbar pa-0" clipped-left>
+            <v-app-bar-nav-icon v-if="isMobile" @click.stop="naviDrawer = !naviDrawer" />
+            
+            <div class="d-flex align-center justify-center flex-grow-1" style="max-width: 800px; margin: 0 auto; padding: 0 16px;">
+                <div class="pc-search-bar px-4 d-flex align-center">
+                    <v-icon color="grey darken-1" class="mr-3">mdi-magnify</v-icon>
+                    <v-text-field
+                        flat
+                        hide-details
+                        solo
+                        background-color="transparent"
+                        placeholder="Search in Pebble Cheese..."
+                        class="pc-search-input"
+                    ></v-text-field>
+                    <v-spacer />
+                    <div class="d-flex align-center ml-2">
+                        <v-chip small label outlined class="mr-2 d-none d-md-inline-flex" color="grey lighten-1">
+                            {{ printerName }}
+                        </v-chip>
+                        <printer-selector v-if="countPrinters > 1" />
+                    </div>
+                </div>
+            </div>
+
             <v-spacer />
             <input
                 ref="fileUploadAndStart"
