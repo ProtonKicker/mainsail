@@ -1,5 +1,5 @@
 <template>
-    <v-app :style="cssVars">
+    <v-app :style="cssVars" class="macos-app">
         <template v-if="socketIsConnected && guiIsReady">
             <the-sidebar />
             <the-topbar />
@@ -403,6 +403,7 @@ export default class App extends Mixins(BaseMixin, ThemeMixin) {
 @import './assets/styles/sidebar.css';
 @import './assets/styles/utils.css';
 @import './assets/styles/updateManager.css';
+@import './assets/styles/macos-theme.css';
 
 :root {
     --app-height: 100%;

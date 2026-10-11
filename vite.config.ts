@@ -9,6 +9,7 @@ import { checker } from 'vite-plugin-checker'
 import path from 'path'
 import buildVersion from './src/plugins/build-version'
 import buildReleaseInfo from './src/plugins/build-release_info'
+import { fakeMoonraker } from './src/plugins/fake-moonraker'
 import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
 import postcssNesting from 'postcss-nesting'
 
@@ -91,6 +92,7 @@ export default defineConfig({
             dts: true, // enabled by default if `typescript` is installed
             resolvers: [VuetifyResolver()],
         }),
+        fakeMoonraker(),
     ],
 
     css: {

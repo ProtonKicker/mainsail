@@ -15,6 +15,7 @@ import BaseMixin from '@/components/mixins/base'
 @Component
 export default class WebcamMixin extends Mixins(BaseMixin) {
     convertUrl(baseUrl: string, printerUrl: string | null) {
+        if (!baseUrl) return ''
         let url = new URL(baseUrl, this.hostUrl.toString())
 
         // use printerURL if it exists

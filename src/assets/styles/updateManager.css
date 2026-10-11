@@ -1,3 +1,4 @@
+/* Update Manager - responsive timeline */
 @media screen and (max-width: 480px) {
     .v-application--is-ltr .updateManager.v-timeline--dense:not(.v-timeline--reverse):before {
         left: calc(24px - 1px);
@@ -10,4 +11,40 @@
     .updateManager.v-timeline--dense .v-timeline-item__body {
         max-width: calc(100% - 48px);
     }
+}
+
+/* Update Manager Panel - macOS style */
+.update-manager-container {
+    font-size: 13px;
+}
+
+.update-manager-container .v-expansion-panel-header {
+    font-size: 13px !important;
+    min-height: 40px !important;
+    padding: 8px 16px !important;
+}
+
+.update-manager-container .v-expansion-panel-content__wrap {
+    padding: 8px 16px 16px !important;
+}
+
+.update-manager-container code,
+.update-manager-container pre,
+.update-manager-container .update-log {
+    font-family: 'SF Mono', 'SFMono-Regular', 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    font-size: 11px !important;
+}
+
+.update-manager-container .update-item {
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: 2px 0;
+}
+
+.theme--dark .update-manager-container .update-item {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.theme--light .update-manager-container .update-item {
+    background: rgba(0, 0, 0, 0.03);
 }

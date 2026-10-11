@@ -61,17 +61,20 @@ export default class SettingsRow extends Mixins(BaseMixin) {
 .settings-row-title {
     display: block;
     width: 100%;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: -0.01em;
 }
 
 .settings-row-subtitle {
     display: block;
-    font-size: 0.8em;
-    line-height: 1.3;
-    margin-top: 3px;
+    font-size: 11px;
+    line-height: 1.4;
+    margin-top: 2px;
+    opacity: 0.6;
 }
 
 .settings-row-slot {
-    min-height: 64px;
+    min-height: 48px;
 }
 </style>

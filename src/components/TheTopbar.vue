@@ -7,7 +7,7 @@
                 <img v-else-if="sidebarLogo" :src="sidebarLogo" :class="logoClasses" alt="Logo" />
                 <mainsail-logo v-else :color="logoColor" :class="logoClasses" router to="/" :ripple="false" />
             </router-link>
-            <v-toolbar-title class="text-no-wrap ml-0 pl-2 mr-2">{{ printerName }}</v-toolbar-title>
+            <v-toolbar-title class="text-no-wrap ml-0 pl-2 mr-2 topbar-title">{{ printerName }}</v-toolbar-title>
             <printer-selector v-if="countPrinters" />
             <v-spacer />
             <input
@@ -26,7 +26,7 @@
                 :disabled="printerIsPrinting"
                 :loading="loadings.includes('topbarSaveConfig')"
                 @click="saveConfig">
-                <v-icon class="d-md-none">{{ mdiContentSave }}</v-icon>
+                <span class="emoji-icon-sm d-md-none">💾</span>
                 <span class="d-none d-md-inline">{{ $t('App.TopBar.SAVE_CONFIG') }}</span>
             </v-btn>
             <v-btn
@@ -38,7 +38,7 @@
                 class="button-min-width-auto px-3 d-none d-sm-flex upload-and-start-button"
                 :loading="loadings.includes('btnUploadAndStart')"
                 @click="btnUploadAndStart">
-                <v-icon class="mr-md-2">{{ mdiFileUpload }}</v-icon>
+                <span class="emoji-icon-sm mr-md-2">📤</span>
                 <span class="d-none d-md-inline">{{ $t('App.TopBar.UploadPrint') }}</span>
             </v-btn>
             <v-btn
@@ -50,7 +50,7 @@
                 class="button-min-width-auto px-3 emergency-button"
                 :loading="loadings.includes('topbarEmergencyStop')"
                 @click="btnEmergencyStop">
-                <v-icon class="mr-md-2">{{ mdiAlertOctagonOutline }}</v-icon>
+                <span class="emoji-icon-sm mr-md-2">🛑</span>
                 <span class="d-none d-md-inline">{{ $t('App.TopBar.EmergencyStop') }}</span>
             </v-btn>
             <the-notification-menu />
@@ -65,7 +65,7 @@
             <v-progress-linear class="mt-2" :value="uploadSnackbar.percent"></v-progress-linear>
             <template #action="{ attrs }">
                 <v-btn color="red" text v-bind="attrs" style="min-width: auto" @click="cancelUpload">
-                    <v-icon class="0">{{ mdiClose }}</v-icon>
+                    <span class="emoji-icon-sm">✕</span>
                 </v-btn>
             </template>
         </v-snackbar>
@@ -87,7 +87,7 @@ import PrinterSelector from '@/components/ui/PrinterSelector.vue'
 import MainsailLogo from '@/components/ui/MainsailLogo.vue'
 import TheNotificationMenu from '@/components/notifications/TheNotificationMenu.vue'
 import { topbarHeight } from '@/store/variables'
-import { mdiAlertOctagonOutline, mdiContentSave, mdiFileUpload, mdiClose, mdiCloseThick } from '@mdi/js'
+// Emoji icons used instead of MDI
 import EmergencyStopDialog from '@/components/dialogs/EmergencyStopDialog.vue'
 import InlineSvg from 'vue-inline-svg'
 import ThemeMixin from '@/components/mixins/theme'
@@ -114,12 +114,6 @@ type uploadSnackbar = {
     },
 })
 export default class TheTopbar extends Mixins(BaseMixin, ThemeMixin) {
-    mdiAlertOctagonOutline = mdiAlertOctagonOutline
-    mdiContentSave = mdiContentSave
-    mdiFileUpload = mdiFileUpload
-    mdiClose = mdiClose
-    mdiCloseThick = mdiCloseThick
-
     topbarHeight = topbarHeight
 
     showEmergencyStopDialog = false
@@ -323,6 +317,12 @@ export default class TheTopbar extends Mixins(BaseMixin, ThemeMixin) {
     padding-bottom: 0 !important;
 }
 
+.topbar-title {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+}
+
 .button-min-width-auto {
     min-width: auto !important;
 }
@@ -333,12 +333,29 @@ export default class TheTopbar extends Mixins(BaseMixin, ThemeMixin) {
 }
 ::v-deep .topbar .nav-logo {
     width: auto;
-    height: 32px;
+    height: 28px;
 }
 /*noinspection CssUnusedSymbol*/
 .topbar .v-btn.v-btn--icon {
     /*noinspection CssUnresolvedCustomProperty*/
     width: var(--topbar-icon-btn-width) !important;
+}
+/*noinspection CssUnusedSymbol*/
+.topbar .v-app-bar-nav-icon {
+    border-radius: 6px !important;
+    margin-left: 6px !important;
+}
+.topbar .v-app-bar-nav-icon:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+.theme--light .topbar .v-app-bar-nav-icon:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.emoji-icon-sm {
+    font-size: 16px;
+    line-height: 1;
+    display: inline-block;
 }
 /*noinspection CssUnusedSymbol*/
 @media (min-width: 768px) {

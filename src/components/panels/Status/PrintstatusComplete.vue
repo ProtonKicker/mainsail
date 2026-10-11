@@ -1,32 +1,55 @@
-<style scoped></style>
+<style scoped>
+.stat-row {
+    padding: 20px 16px 24px 16px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgba(60, 60, 67, 0.5);
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(28, 28, 30, 0.9);
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum";
+}
+</style>
 
 <template>
     <v-card-text class="pa-0">
         <v-container class="py-0">
-            <v-row class="text-center pt-5 pb-2 mb-0" align="center">
-                <v-col class="col-3 pa-0">
-                    <strong>{{ $t('Panels.StatusPanel.Filament') }}</strong>
-                    <br />
-                    <span class="text-no-wrap">
+            <v-row class="stat-row text-center" align="center">
+                <v-col class="col-3 stat-item pa-0">
+                    <span class="stat-label">{{ $t('Panels.StatusPanel.Filament') }}</span>
+                    <span class="stat-value text-no-wrap">
                         {{ outputFilamentUsed }}
                     </span>
                 </v-col>
-                <v-col class="col-3 pa-0">
-                    <strong>{{ $t('Panels.StatusPanel.Slicer') }}</strong>
-                    <br />
-                    <span class="text-no-wrap">
+                <v-col class="col-3 stat-item pa-0">
+                    <span class="stat-label">{{ $t('Panels.StatusPanel.Slicer') }}</span>
+                    <span class="stat-value text-no-wrap">
                         {{ 'estimated_time' in current_file ? formatTime(current_file.estimated_time) : '--' }}
                     </span>
                 </v-col>
-                <v-col class="col-3 pa-0">
-                    <strong>{{ $t('Panels.StatusPanel.Print') }}</strong>
-                    <br />
-                    <span class="text-no-wrap">{{ print_time ? formatTime(print_time) : '--' }}</span>
+                <v-col class="col-3 stat-item pa-0">
+                    <span class="stat-label">{{ $t('Panels.StatusPanel.Print') }}</span>
+                    <span class="stat-value text-no-wrap">{{ print_time ? formatTime(print_time) : '--' }}</span>
                 </v-col>
-                <v-col class="col-3 pa-0">
-                    <strong>{{ $t('Panels.StatusPanel.Total') }}</strong>
-                    <br />
-                    <span class="text-no-wrap">
+                <v-col class="col-3 stat-item pa-0">
+                    <span class="stat-label">{{ $t('Panels.StatusPanel.Total') }}</span>
+                    <span class="stat-value text-no-wrap">
                         {{ print_time_total ? formatTime(print_time_total) : '--' }}
                     </span>
                 </v-col>

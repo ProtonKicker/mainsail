@@ -1,10 +1,10 @@
 import { KlipperRepos, Theme } from '@/store/types'
 
-export const defaultMode = 'dark'
+export const defaultMode = 'light'
 export const defaultTheme = 'mainsail'
 export const defaultLogoColor = '#D41216'
-export const defaultPrimaryColor = '#2196f3'
-export const defaultBigThumbnailBackground = '#1e1e1e'
+export const defaultPrimaryColor = '#007AFF'
+export const defaultBigThumbnailBackground = '#1C1C1E'
 
 export const minKlipperVersion = 'v0.11.0-257'
 export const minMoonrakerVersion = 'v0.8.0-306'
@@ -12,8 +12,8 @@ export const minBrowserVersions = [{ name: 'safari', version: '16.5.2' }]
 
 export const colorArray = ['#F44336', '#8e379d', '#03DAC5', '#3F51B5', '#ffde03', '#009688', '#E91E63']
 
-export const colorHeaterBed = '#2196F3'
-export const colorChamber = '#4CAF50'
+export const colorHeaterBed = '#007AFF'
+export const colorChamber = '#30D158'
 export const opacityHeaterActive = '99'
 export const opacityHeaterInactive = '44'
 export const themeDir = '.theme'

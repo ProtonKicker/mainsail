@@ -1,3 +1,118 @@
+/* Apple System Fonts - SF Pro with fallbacks */
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100;
+    src: local('SF Pro Display Ultralight'), local('SFProDisplay-Ultralight');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 200;
+    src: local('SF Pro Display Thin'), local('SFProDisplay-Thin');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 300;
+    src: local('SF Pro Display Light'), local('SFProDisplay-Light');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local('SF Pro Display Regular'), local('SFProDisplay-Regular');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: local('SF Pro Display Medium'), local('SFProDisplay-Medium');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local('SF Pro Display Semibold'), local('SFProDisplay-Semibold');
+}
+
+@font-face {
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: local('SF Pro Display Bold'), local('SFProDisplay-Bold');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 300;
+    src: local('SF Pro Text Light'), local('SFProText-Light');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local('SF Pro Text Regular'), local('SFProText-Regular');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: local('SF Pro Text Medium'), local('SFProText-Medium');
+}
+
+@font-face {
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local('SF Pro Text Semibold'), local('SFProText-Semibold');
+}
+
+/* SF Mono for code/terminal */
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local('SF Mono Regular'), local('SFMono-Regular');
+}
+
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: local('SF Mono Medium'), local('SFMono-Medium');
+}
+
+@font-face {
+    font-family: 'SF Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local('SF Mono Semibold'), local('SFMono-Semibold');
+}
+
+/* Fallback Roboto for any edge cases */
 /* latin */
 @font-face {
     font-family: 'Roboto';
@@ -64,20 +179,6 @@
         local('Roboto Bold'),
         local('Roboto-Bold'),
         url(/fonts/roboto-bold.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 900;
-    src:
-        local('Roboto Black'),
-        local('Roboto-Black'),
-        url(/fonts/roboto-black.woff2) format('woff2');
     unicode-range:
         U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
         U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;

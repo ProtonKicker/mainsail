@@ -7,6 +7,14 @@
 .icon-rotate-n90 {
     transform: rotate(-90deg);
 }
+
+.btn-collapsible {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+}
 </style>
 
 <template>

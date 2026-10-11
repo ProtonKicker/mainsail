@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sidebar-item-mac">
         <v-tooltip right :open-delay="500" :disabled="navigationStyle !== 'iconsOnly'">
             <template #activator="{ on, attrs }">
                 <v-list-item
@@ -10,11 +10,11 @@
                     :class="itemClass"
                     v-bind="attrs"
                     v-on="on">
-                    <v-list-item-icon class="my-3 mr-3 menu-item-icon">
-                        <v-icon>{{ icon }}</v-icon>
+                    <v-list-item-icon class="my-2 mr-3 menu-item-icon">
+                        <span class="emoji-icon">{{ icon }}</span>
                     </v-list-item-icon>
-                    <v-list-item-content>
-                        <v-list-item-title tile class="menu-item-title">
+                    <v-list-item-content class="py-1">
+                        <v-list-item-title class="menu-item-title">
                             {{ title }}
                         </v-list-item-title>
                     </v-list-item-content>
@@ -22,7 +22,7 @@
             </template>
             <span>{{ title }}</span>
         </v-tooltip>
-        <v-divider v-if="borderBottom" class="my-1" />
+        <v-divider v-if="borderBottom" class="my-1 mx-2" />
     </div>
 </template>
 
@@ -73,7 +73,7 @@ export default class SidebarItem extends Mixins(BaseMixin) {
     get itemClass() {
         return {
             'small-list-item': true,
-            'active-nav-item': this.isActive,
+            'active-nav-item-mac': this.isActive,
         }
     }
 }
@@ -81,22 +81,37 @@ export default class SidebarItem extends Mixins(BaseMixin) {
 
 <style scoped>
 .small-list-item {
-    height: var(--sidebar-menu-item-height);
-}
-
-.active-nav-item {
-    border-right: 4px solid var(--v-primary-base);
+    height: var(--sidebar-menu-item-height, 32px) !important;
+    min-height: 32px !important;
 }
 
 .menu-item-icon {
-    opacity: 0.85;
+    opacity: 0.9;
+    transition: opacity 0.12s ease;
+    min-width: 24px;
+    justify-content: center;
+}
+
+.emoji-icon {
+    font-size: 17px;
+    line-height: 1;
+    display: inline-block;
+}
+
+.active-nav-item-mac .menu-item-icon {
+    opacity: 1;
 }
 
 .menu-item-title {
-    line-height: 30px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0.85;
+    line-height: 18px;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: none;
+    opacity: 1;
+    letter-spacing: -0.01em;
+}
+
+.active-nav-item-mac .menu-item-title {
+    font-weight: 500;
 }
 </style>

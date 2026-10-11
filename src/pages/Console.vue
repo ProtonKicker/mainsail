@@ -146,6 +146,25 @@ export default class PageConsole extends Mixins(BaseMixin, ConsoleMixin) {
 }
 
 .gcode-command-field {
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'SF Mono', 'SFMono-Regular', 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    font-size: 12px !important;
+}
+
+.gcode-command-field >>> textarea {
+    font-family: 'SF Mono', 'SFMono-Regular', 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    font-size: 12px !important;
+}
+
+/* Console button refinements */
+.console-action-btn {
+    border-radius: 5px !important;
+    min-width: 28px !important;
+    padding: 0 6px !important;
+}
+
+/* Console card rounded */
+.theme--dark .console-card.v-card {
+    border-radius: 10px !important;
+    overflow: hidden;
 }
 </style>

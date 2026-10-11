@@ -1,0 +1,683 @@
+/* ================================================================
+   Maineow — Apple-Inspired Design System
+   Clean. Spacious. Modern. Like Apple.com meets macOS System Settings.
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   1.  TYPOGRAPHY & BASE
+   --------------------------------------------------------------- */
+
+.application,
+.v-application {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.v-application .text-h1,
+.v-application .text-h2,
+.v-application .text-h3,
+.v-application .text-h4,
+.v-application .text-h5,
+.v-application .text-h6,
+.v-application .display-1,
+.v-application .display-2,
+.v-application .display-3,
+.v-application .display-4,
+.v-application .headline,
+.v-application .title {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif !important;
+    letter-spacing: -0.025em !important;
+    font-weight: 600 !important;
+}
+
+.v-application .subheading {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+/* ---------------------------------------------------------------
+   2.  TOPBAR — clean, minimal, transparent
+   --------------------------------------------------------------- */
+
+.v-app-bar.v-toolbar.v-sheet {
+    background: rgba(251, 251, 253, 0.72) !important;
+    backdrop-filter: saturate(180%) blur(20px) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: none !important;
+}
+
+.v-app-bar .v-toolbar__title {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    letter-spacing: -0.02em !important;
+}
+
+.v-app-bar .v-btn {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+}
+
+/* ---------------------------------------------------------------
+   3.  NAVIGATION DRAWER – macOS System Settings
+   --------------------------------------------------------------- */
+
+.v-navigation-drawer {
+    background: #F2F2F7 !important;
+    border-right: none !important;
+    width: 260px !important;
+}
+
+/* Search in sidebar */
+.sidebar-search {
+    margin: 8px 12px 4px 12px;
+}
+
+.sidebar-search .v-input__slot {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    min-height: 32px !important;
+    padding: 0 12px !important;
+    box-shadow: none !important;
+}
+
+.sidebar-search .v-icon {
+    opacity: 0.4;
+    font-size: 18px !important;
+}
+
+.sidebar-search input {
+    font-size: 13px !important;
+}
+
+/* Section titles in sidebar */
+.sidebar-section-title {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(60, 60, 67, 0.6) !important;
+    padding: 16px 20px 4px 20px;
+}
+
+/* Sidebar nav items */
+.v-navigation-drawer .v-list {
+    background: transparent !important;
+    padding: 0;
+}
+
+.v-navigation-drawer .v-list-group {
+    background: transparent !important;
+}
+
+.v-navigation-drawer .v-list-group__header {
+    padding: 0 !important;
+    margin: 0 8px;
+    border-radius: 8px;
+    min-height: 34px;
+}
+
+.v-navigation-drawer .v-list-group__header:hover {
+    background: rgba(0, 0, 0, 0.03) !important;
+}
+
+.v-navigation-drawer .v-list-item {
+    border-radius: 8px !important;
+    margin: 1px 8px !important;
+    min-height: 34px !important;
+    padding: 0 12px !important;
+    transition: background-color 0.15s ease !important;
+}
+
+.v-navigation-drawer .v-list-item:hover {
+    background: rgba(0, 0, 0, 0.03) !important;
+}
+
+.v-navigation-drawer .v-list-item__icon {
+    margin-right: 12px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+.v-navigation-drawer .v-list-item__icon .v-icon {
+    font-size: 18px !important;
+}
+
+.v-navigation-drawer .v-list-item__title {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.3 !important;
+}
+
+/* Active sidebar item — subtle white pill style */
+.v-navigation-drawer .v-list-item--active {
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    font-weight: 500 !important;
+}
+
+.v-navigation-drawer .v-list-item--active::before {
+    display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   4.  CARDS – Apple-style white cards w/ soft shadow
+   --------------------------------------------------------------- */
+
+.theme--light .v-card,
+.theme--dark.v-card,
+.theme--light.v-card {
+    background: #FFFFFF !important;
+    background-color: #FFFFFF !important;
+    border-radius: 14px !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.025), 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+}
+
+.v-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03), 0 8px 28px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Card padding — generous */
+.v-card__text {
+    padding: 20px !important;
+}
+
+/* ---------------------------------------------------------------
+   5.  PANEL TOOLBAR — clean title bar
+   --------------------------------------------------------------- */
+
+.panel-toolbar,
+.theme--light .v-toolbar {
+    background: transparent !important;
+    border-bottom: none !important;
+}
+
+.panel-toolbar .v-toolbar__title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+.panel-toolbar .v-toolbar__content {
+    padding: 0 16px !important;
+}
+
+.panel-toolbar .subheading {
+    user-select: none;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+/* ---------------------------------------------------------------
+   6.  BUTTONS
+   --------------------------------------------------------------- */
+
+.v-btn {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    transition: all 0.15s ease !important;
+}
+
+.v-btn.v-btn--has-bg {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.v-btn.v-btn--has-bg:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-0.5px);
+}
+
+.v-btn.v-btn--has-bg:active {
+    transform: none;
+}
+
+.v-btn.v-btn--has-bg[color="primary"] {
+    background: #0071E3 !important;
+    background-color: #0071E3 !important;
+    color: white !important;
+    box-shadow: 0 1px 3px rgba(0, 113, 227, 0.25) !important;
+}
+
+.v-btn.v-btn--has-bg[color="primary"]:hover {
+    background: #0077ED !important;
+    box-shadow: 0 2px 6px rgba(0, 113, 227, 0.35) !important;
+}
+
+.v-btn.v-btn--has-bg[color="error"] {
+    background: #FF3B30 !important;
+    color: white !important;
+    box-shadow: 0 1px 3px rgba(255, 59, 48, 0.25) !important;
+}
+
+.v-btn--icon {
+    border-radius: 8px !important;
+}
+
+.v-btn--icon.v-btn--small {
+    width: 28px !important;
+    height: 28px !important;
+}
+
+/* ---------------------------------------------------------------
+   7.  INPUT FIELDS — minimal Apple style
+   --------------------------------------------------------------- */
+
+.theme--light.v-text-field > .v-input__control > .v-input__slot {
+    background: rgba(0, 0, 0, 0.035) !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    transition: all 0.15s ease !important;
+}
+
+.theme--light.v-text-field > .v-input__control > .v-input__slot:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.theme--light.v-input--is-focused > .v-input__control > .v-input__slot {
+    background: #FFFFFF !important;
+    border-color: #0071E3 !important;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1) !important;
+}
+
+.v-input {
+    font-size: 13px !important;
+}
+
+.v-input .v-label {
+    font-size: 13px !important;
+}
+
+.v-input__slot {
+    min-height: 36px !important;
+}
+
+.v-input input,
+.v-input textarea {
+    font-size: 13px !important;
+}
+
+/* ---------------------------------------------------------------
+   8.  DATA TABLES — Apple-like rows
+   --------------------------------------------------------------- */
+
+.theme--light.v-data-table {
+    background: transparent !important;
+    border: none !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0.02em;
+    color: rgba(60, 60, 67, 0.6) !important;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+    background: transparent !important;
+    padding: 8px 16px !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr > td {
+    font-size: 12.5px !important;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.04) !important;
+    padding: 10px 16px !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:hover {
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+
+.theme--light.v-data-table > .v-data-table__wrapper > table > tbody > tr:last-child > td {
+    border-bottom: none !important;
+}
+
+/* ---------------------------------------------------------------
+   9.  LISTS
+   --------------------------------------------------------------- */
+
+.theme--light.v-list {
+    background: transparent !important;
+}
+
+.v-list-item {
+    transition: background-color 0.12s ease !important;
+}
+
+/* ---------------------------------------------------------------
+   10.  CHIPS
+   --------------------------------------------------------------- */
+
+.v-chip {
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+}
+
+.theme--light.v-chip {
+    background: rgba(0, 0, 0, 0.06) !important;
+    border: none !important;
+}
+
+/* ---------------------------------------------------------------
+   11.  TABS
+   --------------------------------------------------------------- */
+
+.v-tabs {
+    border-radius: 8px !important;
+}
+
+.theme--light.v-tabs {
+    background: rgba(0, 0, 0, 0.035) !important;
+}
+
+.v-tab {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+    font-size: 12.5px !important;
+    border-radius: 6px !important;
+    margin: 2px !important;
+}
+
+.v-tab--active {
+    font-weight: 600 !important;
+}
+
+.v-tab-items {
+    border-radius: 8px !important;
+}
+
+/* ---------------------------------------------------------------
+   12.  DROPDOWNS / MENUS
+   --------------------------------------------------------------- */
+
+.v-menu__content {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1), 0 0 0 0.5px rgba(0, 0, 0, 0.06) !important;
+    border: none !important;
+}
+
+.theme--light .v-menu__content {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(40px) !important;
+}
+
+.v-menu__content .v-list-item {
+    border-radius: 6px !important;
+    margin: 2px 4px !important;
+    font-size: 12.5px !important;
+    min-height: 32px !important;
+}
+
+/* ---------------------------------------------------------------
+   13.  DIALOGS
+   --------------------------------------------------------------- */
+
+.v-dialog {
+    border-radius: 16px !important;
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.06) !important;
+    overflow: hidden;
+}
+
+.theme--light.v-dialog {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(80px) saturate(180%) !important;
+}
+
+/* ---------------------------------------------------------------
+   14.  SLIDERS
+   --------------------------------------------------------------- */
+
+.v-slider__track-background {
+    background: rgba(0, 0, 0, 0.08) !important;
+    border-radius: 2px !important;
+}
+
+.v-slider__track-fill {
+    border-radius: 2px !important;
+}
+
+.v-slider__thumb {
+    background: white !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(0, 0, 0, 0.04) !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.v-slider__thumb::before {
+    display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   15.  PROGRESS LINEAR
+   --------------------------------------------------------------- */
+
+.v-progress-linear {
+    border-radius: 3px !important;
+    overflow: hidden;
+}
+
+.theme--light .v-progress-linear {
+    background: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ---------------------------------------------------------------
+   16.  ALERTS
+   --------------------------------------------------------------- */
+
+.v-alert {
+    border-radius: 10px !important;
+    font-size: 12.5px !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+.v-alert--dense {
+    border-radius: 8px !important;
+}
+
+/* ---------------------------------------------------------------
+   17.  DIVIDER
+   --------------------------------------------------------------- */
+
+.theme--light.v-divider {
+    border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ---------------------------------------------------------------
+   18.  SPACING
+   --------------------------------------------------------------- */
+
+.v-container {
+    padding: 16px 20px !important;
+}
+
+.v-row {
+    margin-top: -6px !important;
+    margin-bottom: -6px !important;
+}
+
+.v-row > .col,
+.v-row > [class*='col-'] {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+
+/* ---------------------------------------------------------------
+   19.  BADGES
+   --------------------------------------------------------------- */
+
+.v-badge__badge {
+    border-radius: 9px !important;
+    font-weight: 600 !important;
+    font-size: 10px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    padding: 0 5px !important;
+}
+
+/* ---------------------------------------------------------------
+   20.  SCROLLBARS
+   --------------------------------------------------------------- */
+
+html {
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    background-color: transparent;
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    min-height: 24px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ---------------------------------------------------------------
+   21.  TOOLTIPS
+   --------------------------------------------------------------- */
+
+.v-tooltip__content {
+    border-radius: 6px !important;
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+    letter-spacing: 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+
+.theme--light .v-tooltip__content {
+    background: rgba(28, 28, 30, 0.85) !important;
+}
+
+/* ---------------------------------------------------------------
+   22.  SNACKBARS
+   --------------------------------------------------------------- */
+
+.v-snack__wrapper {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.theme--light.v-snack__wrapper {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(40px) !important;
+    border: none !important;
+}
+
+/* ---------------------------------------------------------------
+   23.  EXPANSION PANELS
+   --------------------------------------------------------------- */
+
+.v-expansion-panel {
+    border-radius: 10px !important;
+    margin-bottom: 4px !important;
+    background: white !important;
+}
+
+.v-expansion-panel-header {
+    font-size: 12.5px !important;
+    min-height: 40px !important;
+    padding: 8px 16px !important;
+}
+
+.v-expansion-panels {
+    background: transparent !important;
+}
+
+/* ---------------------------------------------------------------
+   24.  BOTTOM NAV / MOBILE
+   --------------------------------------------------------------- */
+
+.v-item-group.v-bottom-navigation {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 -0.5px 0 rgba(0, 0, 0, 0.08) !important;
+    border: none !important;
+}
+
+/* ---------------------------------------------------------------
+   25.  PANEL BUTTONS (icon buttons in panel headers)
+   --------------------------------------------------------------- */
+
+.panel-toolbar .v-btn.v-btn--icon {
+    width: var(--panel-toolbar-icon-btn-width, 28px) !important;
+}
+
+.panel-toolbar .v-btn:hover {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ---------------------------------------------------------------
+   26.  MACOS TRAFFIC LIGHTS (decorative)
+   --------------------------------------------------------------- */
+
+.macos-lights {
+    display: flex;
+    gap: 6px;
+    padding-left: 20px;
+}
+
+.macos-lights .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.macos-lights .close { background: #FF5F57; }
+.macos-lights .minimize { background: #FFBD2E; }
+.macos-lights .maximize { background: #28C840; }
+
+/* ---------------------------------------------------------------
+   27.  MONOSPACE
+   --------------------------------------------------------------- */
+
+code, pre, .code-mirror, .cm-editor, .console-output {
+    font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    font-size: 11.5px !important;
+}
+
+/* ---------------------------------------------------------------
+   28.  GLOBAL POLISH
+   --------------------------------------------------------------- */
+
+img {
+    user-select: none;
+}
+
+.v-btn,
+.v-card,
+.v-list-item {
+    will-change: auto;
+}
+
+/* Better focus styles */
+.v-btn:focus::before {
+    opacity: 0 !important;
+}
+
+.v-btn:focus-visible {
+    outline: 2px solid rgba(0, 113, 227, 0.4);
+    outline-offset: 1px;
+}

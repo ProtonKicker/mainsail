@@ -1,10 +1,22 @@
+/* ============================================
+   Mainsail macOS Theme - Page Styles
+   Designed to feel native to macOS
+   ============================================ */
+
+/* Base styles */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 html {
     overflow: auto;
-    scrollbar-color: #6b6b6b #272727;
 }
 
 body {
-    background: #121212;
+    background: #1C1C1E;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', 'Roboto', sans-serif;
+    letter-spacing: -0.01em;
 }
 
 #page-container {
@@ -14,6 +26,48 @@ body {
 #page-container.fullscreen {
     max-width: none;
 }
+
+/* ============================================
+   macOS-style Scrollbars
+   Thin, overlay-style like native macOS
+   ============================================ */
+
+/* Firefox scrollbar */
+html {
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    scrollbar-width: thin;
+}
+
+/* WebKit scrollbar - thin macOS overlay style */
+::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    border: none;
+    min-width: 30px;
+    min-height: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
 
 .overflowingContentWidgets {
     visibility: hidden;
@@ -71,19 +125,9 @@ body {
     height: calc(100vh - 48px);
 }
 
-::-webkit-scrollbar {
-    background-color: #272727;
-    width: 14px;
-    height: 14px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #6b6b6b;
-    border-radius: 7px;
-    border: 4px solid #272727;
-    min-width: 100px;
-    min-height: 100px;
-}
+/* ============================================
+   macOS-style Borders
+   ============================================ */
 
 .bt-1,
 .bb-1,
@@ -91,54 +135,81 @@ body {
 .br-1 {
     border-width: 0;
     border-style: solid !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .bt-1 {
-    border-top-width: 1px !important;
+    border-top-width: 0.5px !important;
 }
 
 .br-1 {
-    border-right-width: 1px !important;
+    border-right-width: 0.5px !important;
 }
 
 .bb-1 {
-    border-bottom-width: 1px !important;
+    border-bottom-width: 0.5px !important;
 }
 
 .bl-1 {
-    border-left-width: 1px !important;
+    border-left-width: 0.5px !important;
+}
+
+/* ============================================
+   Light theme overrides
+   ============================================ */
+
+html.theme--light {
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+html.theme--light body {
+    background: #F5F5F7 !important;
+}
+
+html.theme--light ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+html.theme--light ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+
+html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle:hover {
+    background: rgba(0, 0, 0, 0.45) !important;
 }
 
 .theme--light .bt-1,
 .theme--light .bb-1,
 .theme--light .bl-1,
 .theme--light .br-1 {
-    border-color: rgba(0, 0, 0, 0.12) !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Light theme */
-html.theme--light {
-    scrollbar-color: rgba(0, 0, 0, 0.55) #ffffff;
+/* ============================================
+   macOS Glass / Vibrancy Effect Classes
+   ============================================ */
+
+.macos-glass-dark {
+    background-color: rgba(44, 44, 46, 0.82) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
 }
 
-html.theme--light body {
-    background: #ffffff !important;
+.macos-glass-light {
+    background-color: rgba(242, 242, 247, 0.82) !important;
+    backdrop-filter: blur(40px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
 }
 
-html.theme--light ::-webkit-scrollbar {
-    background-color: #ffffff;
-}
+/* ============================================
+   macOS-style Selection
+   ============================================ */
 
-html.theme--light ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-color: #ffffff;
-}
-
-html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
-    background: rgba(0, 0, 0, 0.4) !important;
-}
-
-html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle:hover {
-    background: rgba(0, 0, 0, 0.55) !important;
+::selection {
+    background: rgba(0, 122, 255, 0.3);
+    color: inherit;
 }

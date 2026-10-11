@@ -14,11 +14,11 @@
 
         <overlay-scrollbars class="nav-scrollbar">
             <v-list class="pr-0 pt-0 ml-0">
-                <v-list-item
-                    v-if="isMobile"
-                    router
-                    to="/"
-                    :class="mobileLogoClass"
+            <v-list-item
+                v-if="0"
+                router
+                to="/"
+                :class="mobileLogoClass"
                     :style="`height: ${topbarHeight}px`"
                     :ripple="false">
                     <img v-if="sidebarLogo" :src="sidebarLogo" :style="logoCssVars" class="nav-logo" alt="Logo" />
