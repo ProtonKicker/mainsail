@@ -158,6 +158,33 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 8080,
+        proxy: {
+            '/websocket': {
+                target: 'ws://localhost:7125',
+                ws: true,
+                changeOrigin: true,
+            },
+            '/server': {
+                target: 'http://localhost:7125',
+                changeOrigin: true,
+            },
+            '/printer': {
+                target: 'http://localhost:7125',
+                changeOrigin: true,
+            },
+            '/machine': {
+                target: 'http://localhost:7125',
+                changeOrigin: true,
+            },
+            '/access': {
+                target: 'http://localhost:7125',
+                changeOrigin: true,
+            },
+            '/api': {
+                target: 'http://localhost:7125',
+                changeOrigin: true,
+            },
+        },
     },
 
     test: {
