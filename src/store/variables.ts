@@ -1,9 +1,25 @@
 import { KlipperRepos, Theme } from '@/store/types'
 
-export const defaultMode = 'dark'
+/* NOTION theme defaults - see src/plugins/vuetify.ts for the full palettes.
+ * defaultLogoColor stays the Mainsail brand red on purpose: the logo mark is
+ * painted as an inline `fill` by MainsailLogo.vue (one mode-independent value),
+ * so a charcoal ink like #37352f disappears on the #202020 dark sidebar/topbar.
+ * The red reads on both canvases and keeps the existing persisted-value
+ * comparison in SettingsUiSettingsTab stable.
+ *
+ * defaultBigThumbnailBackground must likewise stay at the value every install
+ * already persisted in moonraker uiSettings (#1e1e1e was the shipped default for
+ * ages). It is not a paint value but an equality marker: PrintstatusThumbnail,
+ * GcodefilesThumbnail, HistoryEntry, StartPrintDialogThumbnail and
+ * SettingsUiSettingsTab compare it against the stored setting. Re-pointing it at
+ * the Notion sidebar grey would make the old near-black default look like a user
+ * customisation, so existing installs got an inline black thumbnail background
+ * on the new light cards plus a "reset to default" affordance nobody asked for.
+ * The light canvas itself comes from the theme, not from this constant. */
+export const defaultMode = 'light'
 export const defaultTheme = 'mainsail'
 export const defaultLogoColor = '#D41216'
-export const defaultPrimaryColor = '#2196f3'
+export const defaultPrimaryColor = '#2383e2'
 export const defaultBigThumbnailBackground = '#1e1e1e'
 
 export const minKlipperVersion = 'v0.11.0-257'

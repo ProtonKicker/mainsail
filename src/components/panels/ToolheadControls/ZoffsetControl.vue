@@ -237,7 +237,10 @@ export default class ZoffsetControl extends Mixins(BaseMixin, ZoffsetMixin) {
     }
 }
 
-html.theme--light ._btn-group .v-btn {
+/* dual anchor: App.vue writes html.className only from the non-immediate mode
+   watcher, so on a default light boot `html.theme--light` never matches */
+html.theme--light ._btn-group .v-btn,
+.v-application.theme--light ._btn-group .v-btn {
     border-color: rgba(0, 0, 0, 0.12);
 }
 

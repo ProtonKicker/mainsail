@@ -162,7 +162,11 @@ export default class MmuUnitGate extends Mixins(BaseMixin, MmuMixin) {
     font-size: 14px;
 }
 
-html.theme--light .gate-number {
+/* dual anchor: App.vue writes html.className only from the non-immediate mode
+   watcher, so on a default light boot `html.theme--light` never matches and the
+   gate numbers stayed dark-theme ink on the light unit */
+html.theme--light .gate-number,
+.v-application.theme--light .gate-number {
     color: #5d5d5d;
 }
 
@@ -193,7 +197,8 @@ html.theme--light .gate-number {
     width: 100%;
 }
 
-html.theme--light .mmu-unit-box {
+html.theme--light .mmu-unit-box,
+.v-application.theme--light .mmu-unit-box {
     box-shadow: inset 0 4px 4px -4px #ffffff80;
     background-image: linear-gradient(to bottom, #c0c0c0 0%, #f0f0f0 100%);
 }

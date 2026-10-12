@@ -535,10 +535,13 @@ export default class WebcamForm extends Mixins(BaseMixin, WebcamMixin) {
     ._menu-button {
         height: 40px;
         width: 62px;
-        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        /* Notion hairline instead of a white border: this group sits on the
+           #ffffff settings card in light mode, where rgba(255,255,255,.25) had
+           no outline and no hover feedback at all */
+        border: 1px solid var(--notion-border-strong, rgba(255, 255, 255, 0.25)) !important;
     }
     ._menu-button:hover {
-        border-color: rgba(255, 255, 255, 1) !important;
+        border-color: var(--notion-accent, rgba(255, 255, 255, 1)) !important;
     }
     ._menu-button:focus {
         border: 2px solid var(--color-primary) !important;

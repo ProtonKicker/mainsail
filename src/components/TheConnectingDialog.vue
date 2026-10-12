@@ -6,7 +6,11 @@
                 <p class="text-center mt-3 mb-0">
                     {{ $t('ConnectionDialog.CannotConnectTo', { host: formatHostname }) }}
                 </p>
-                <p v-if="connectionFailedMessage" class="text-center mt-1 red--text">
+                <!-- `error--text` instead of the material `red--text` helper:
+                     #F44336 is a hard-coded palette colour that ignores the theme
+                     and only reaches 3.7:1 on the white card. `error--text` reads
+                     the theme key, which carries a darkened light value. -->
+                <p v-if="connectionFailedMessage" class="text-center mt-1 error--text">
                     {{ $t('ConnectionDialog.ErrorMessage', { message: connectionFailedMessage }) }}
                 </p>
                 <template v-if="counter > 2">
@@ -18,7 +22,12 @@
                     <v-divider class="mt-4 mb-5" />
                 </template>
                 <div class="text-center mt-3">
-                    <v-btn v-if="helpButtonUrl" class="text--disabled mr-3" :href="helpButtonUrl" target="_blank">
+                    <!-- `text--secondary`, not `text--disabled`: this is a clickable
+                         link the user needs to read, and the disabled ink
+                         (rgba(0,0,0,.38) / #c3c2bf) sits at 1.8-2.7:1 on the white
+                         card. This dialog also paints before any html theme class
+                         exists, so it may only rely on `.v-application` level ink. -->
+                    <v-btn v-if="helpButtonUrl" class="text--secondary mr-3" :href="helpButtonUrl" target="_blank">
                         <v-icon left>{{ mdiHelp }}</v-icon>
                         {{ $t('ConnectionDialog.Help') }}
                     </v-btn>

@@ -1,87 +1,105 @@
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 100;
-    src:
-        local('Roboto Thin'),
-        local('Roboto-Thin'),
-        url(/fonts/roboto-thin.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+/*
+ * NOTION RESKIN - THEME FOUNDATION (fonts)
+ * ---------------------------------------------------------------------------
+ * The Roboto @font-face rules are gone: Notion uses the platform system font
+ * stack. Roboto Mono is kept on purpose - the console, gcode viewer and
+ * temperature readouts still ask for a monospaced face.
+ *
+ * Vuetify's compiled stylesheet stamps `font-family: Roboto, sans-serif`
+ * with `!important` onto `.v-application` and every typography helper
+ * (`.v-application .text-h4`, `.v-application .caption`, ...). The overrides
+ * below win on specificity (`html` prefix => 0,2,1 vs 0,2,0), never on import
+ * order, so they hold regardless of where this file is injected.
+ *
+ * NOTE for the notion.css owner: with `customProperties: true` Vuetify emits
+ * the palette as `--v-<key>-base` (e.g. `--v-notionsidebar-base`,
+ * `--v-notiontextgray-base`), NOT `--v-theme-<key>`, and every key also becomes
+ * a `.v-application .<key>` color utility class — hence the `notion*` key names.
+ *
+ * BOOT-THEME TRAP: App.vue assigns html.className only from `@Watch('mode')`,
+ * which is NOT immediate, and the mock printer returns no stored uiSettings,
+ * so on first paint <html> carries NO theme class at all. Gate every rule as
+ * `html.theme--light, .v-application.theme--light` (Vuetify always puts
+ * theme--light/theme--dark on .v-application) and the dark equivalents,
+ * otherwise the whole Notion sheet is inert until the user toggles the mode.
+ */
+
+:root {
+    --font-notion:
+        ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, 'Apple Color Emoji', Arial, sans-serif,
+        'Segoe UI Emoji', 'Segoe UI Symbol';
+    --font-notion-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 300;
-    src:
-        local('Roboto Light'),
-        local('Roboto-Light'),
-        url(/fonts/roboto-light.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+html,
+body {
+    font-family: var(--font-notion);
 }
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 400;
-    src:
-        local('Roboto'),
-        local('Roboto-Regular'),
-        url(/fonts/roboto-regular.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+/* base font of the whole app (menus, dialogs and tooltips live inside .v-application) */
+html .v-application,
+html .v-application .v-application--wrap {
+    font-family: var(--font-notion) !important;
 }
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 500;
-    src:
-        local('Roboto Medium'),
-        local('Roboto-Medium'),
-        url(/fonts/roboto-medium.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+/*
+ * Vuetify typography helpers: the responsive `text-*` set plus the legacy
+ * `display-* / headline / title / subtitle-* / body-* / caption / overline`
+ * helpers that a few panels still use.
+ */
+html .v-application .text-h1,
+html .v-application .text-h2,
+html .v-application .text-h3,
+html .v-application .text-h4,
+html .v-application .text-h5,
+html .v-application .text-h6,
+html .v-application .text-subtitle-1,
+html .v-application .text-subtitle-2,
+html .v-application .text-body-1,
+html .v-application .text-body-2,
+html .v-application .text-button,
+html .v-application .text-caption,
+html .v-application .text-overline,
+html .v-application [class*='text-xs-'],
+html .v-application [class*='text-sm-'],
+html .v-application [class*='text-md-'],
+html .v-application [class*='text-lg-'],
+html .v-application [class*='text-xl-'],
+html .v-application .display-4,
+html .v-application .display-3,
+html .v-application .display-2,
+html .v-application .display-1,
+html .v-application .headline,
+html .v-application .title,
+html .v-application .subtitle-1,
+html .v-application .subtitle-2,
+html .v-application .body-2,
+html .v-application .body-1,
+html .v-application .caption,
+html .v-application .overline {
+    font-family: var(--font-notion) !important;
 }
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 700;
-    src:
-        local('Roboto Bold'),
-        local('Roboto-Bold'),
-        url(/fonts/roboto-bold.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+
+/* keep code / console blocks monospaced */
+html .v-application code,
+html .v-application kbd,
+html .v-application pre,
+html .v-application samp {
+    font-family: var(--font-notion-mono) !important;
 }
-/* latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 900;
-    src:
-        local('Roboto Black'),
-        local('Roboto-Black'),
-        url(/fonts/roboto-black.woff2) format('woff2');
-    unicode-range:
-        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+
+/*
+ * Palette keys and class names. With `customProperties: true` Vuetify also turns
+ * every theme key into a color utility class `.v-application .<key> {
+ * background-color + border-color: var(--v-<key>-base) !important }`, which is
+ * why the Notion palette in src/plugins/vuetify.ts uses `notion*` key names:
+ * `panel`, `toolbar`, `text`, `border`, `surface` and `sidebar` collided with
+ * real class names used by components (every dashboard card carries `.panel`,
+ * TheSelectPrinterDialog ships a bare `.toolbar`). Nothing in this palette can
+ * therefore leak into a component's class list, and no mitigation rule for a
+ * forced border-color/background is needed here any more.
+ */
+
 /* latin */
 @font-face {
     font-family: 'Roboto Mono';

@@ -78,7 +78,11 @@ text {
     fill: var(--zone-background-dark-theme);
 }
 
-html.theme--light .sensor-disabled {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so on a default light boot `html.theme--light` alone never matches and the
+   SVG keeps the dark-theme fill */
+html.theme--light .sensor-disabled,
+.v-application.theme--light .sensor-disabled {
     fill: var(--zone-background-light-theme);
 }
 
@@ -86,7 +90,8 @@ html.theme--light .sensor-disabled {
     fill: var(--zone-background-dark-theme);
 }
 
-html.theme--light .sensor-open {
+html.theme--light .sensor-open,
+.v-application.theme--light .sensor-open {
     fill: var(--zone-background-light-theme);
 }
 
@@ -94,7 +99,8 @@ html.theme--light .sensor-open {
     fill: var(--background-dark-theme);
 }
 
-html.theme--light .sensor-disabled.outside-zone {
+html.theme--light .sensor-disabled.outside-zone,
+.v-application.theme--light .sensor-disabled.outside-zone {
     fill: var(--background-light-theme);
 }
 
@@ -102,7 +108,8 @@ html.theme--light .sensor-disabled.outside-zone {
     fill: var(--background-dark-theme);
 }
 
-html.theme--light .sensor-open.outside-zone {
+html.theme--light .sensor-open.outside-zone,
+.v-application.theme--light .sensor-open.outside-zone {
     fill: var(--background-light-theme);
 }
 </style>

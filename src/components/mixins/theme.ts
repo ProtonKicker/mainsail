@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import { defaultMode } from '@/store/variables'
 
 @Component
 export default class ThemeMixin extends Vue {
@@ -21,7 +22,10 @@ export default class ThemeMixin extends Vue {
     }
 
     get themeMode() {
-        return this.$store.state.gui.uiSettings.mode ?? 'dark'
+        /* fallback must follow the app default (light since the Notion reskin),
+           otherwise CodeMirror paints vscodeDark on a white page before
+           uiSettings arrives over the websocket */
+        return this.$store.state.gui.uiSettings.mode ?? defaultMode
     }
 
     get fgColorHi() {
@@ -40,13 +44,18 @@ export default class ThemeMixin extends Vue {
         return this.fgColor(0.1)
     }
 
-    get machineButtonCol() {
-        return this.$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-1'
+    get draggableBgStyle() {
+        /* Notion surfaces instead of the old Material greys: sidebar bg is
+           #f7f6f3 light / #202020 dark */
+        const col = this.$vuetify.theme.dark ? '#202020' : '#f7f6f3'
+        return `background-color: ${col}`
     }
 
-    get draggableBgStyle() {
-        const col = this.$vuetify.theme.dark ? '#282828' : '#e7e7e7'
-        return `background-color: ${col}`
+    get machineButtonCol() {
+        /* grey lighten-3 is #eeeeee — the Neutral grey that matches
+           --notion-active on the light canvas; darken-3 (#424242) is the closest
+           match to --notion-active on the dark canvas */
+        return this.$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-3'
     }
 
     get progressBarColor() {

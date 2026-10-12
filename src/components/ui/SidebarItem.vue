@@ -80,23 +80,24 @@ export default class SidebarItem extends Mixins(BaseMixin) {
 </script>
 
 <style scoped>
-.small-list-item {
-    height: var(--sidebar-menu-item-height);
-}
-
+/**
+ * Intentionally tiny.
+ * Row size, radius, hover/selected fills and the 14px/500 label are shared with
+ * every other list in the app and therefore belong to notion.css; the sidebar
+ * specifics (16px marks, ink, `.active-nav-item` selected state, icons-only
+ * rail, legacy `nav ul.navi`) live in src/assets/styles/sidebar.css, which also
+ * styles the rows TheSidebar.vue renders and can out-specify both Vuetify and
+ * notion.css from a single place.
+ *
+ * Only the local gutter of this component's own markup is kept here: the
+ * template ships the `my-3` / `mr-3` utilities, which are !important.
+ */
 .active-nav-item {
-    border-right: 4px solid var(--v-primary-base);
+    /* selected row = flat fill + heavier label, not the old 4px primary bar */
+    border-right: 0;
 }
 
-.menu-item-icon {
-    opacity: 0.85;
-}
-
-.menu-item-title {
-    line-height: 30px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0.85;
+.v-list-item__icon.menu-item-icon {
+    margin: 0 8px 0 0 !important;
 }
 </style>

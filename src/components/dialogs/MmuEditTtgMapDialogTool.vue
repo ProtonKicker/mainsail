@@ -75,7 +75,10 @@ export default class MmuEditTtgMapDialogTool extends Mixins(BaseMixin, MmuMixin)
     cursor: pointer;
 }
 
-html.theme--light .mmuEditTtgMapDialogTool {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so on a default light boot `html.theme--light` alone never matches */
+html.theme--light .mmuEditTtgMapDialogTool,
+.v-application.theme--light .mmuEditTtgMapDialogTool {
     background: #f0f0f0;
 }
 

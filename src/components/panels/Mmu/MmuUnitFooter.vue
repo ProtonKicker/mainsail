@@ -139,7 +139,9 @@ export default class MmuUnitFooter extends Mixins(BaseMixin, MmuMixin) {
     border-radius: 0 0 8px 8px;
 }
 
-html.theme--light .mmu-unit-footer {
+/* dual anchor: <html> carries no theme class on a default light boot */
+html.theme--light .mmu-unit-footer,
+.v-application.theme--light .mmu-unit-footer {
     background: #f0f0f0;
 }
 

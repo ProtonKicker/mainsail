@@ -98,7 +98,11 @@ export default class MmuUnit extends Mixins(BaseMixin, MmuMixin) {
     box-shadow: inset 0 4px 4px -4px #ffffff80;
 }
 
-html.theme--light .mmu-unit {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so on a default light boot `html.theme--light` alone never matches and the
+   unit stayed on its dark #2c2c2c shell */
+html.theme--light .mmu-unit,
+.v-application.theme--light .mmu-unit {
     background: #f0f0f0;
     box-shadow: inset 0 4px 2px -4px #2c2c2c80;
 }

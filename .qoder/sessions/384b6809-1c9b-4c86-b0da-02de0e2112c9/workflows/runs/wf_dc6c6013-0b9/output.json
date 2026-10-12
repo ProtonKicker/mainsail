@@ -1,0 +1,27 @@
+{
+  "runId": "wf_dc6c6013-0b9",
+  "taskId": "wf-adceb94e-f5a",
+  "workflowName": "notion-reskin-mainsail",
+  "status": "failed",
+  "result": null,
+  "logs": [
+    "Fanning out 5 implementation agents with disjoint file ownership",
+    "Implementation done: 5/5 agents reported, 12 files touched",
+    "Build phase: lint=true build=true",
+    "Review: 57 findings, 31 actionable (medium/high)"
+  ],
+  "failures": [
+    "agent[11] fix:apply-gaps failed: Reached the maximum turn limit (150). The task may be incomplete. Increase maxTurns in this Subagent's configuration and retry.\n\nPartial result:\nApplying the dual-anchor fix across the remaining component gates:\n\n"
+  ],
+  "agentCount": 11,
+  "totalToolCalls": 936,
+  "durationMs": 7030516,
+  "usage": {
+    "agents": 11,
+    "toolCalls": 936,
+    "durationMs": 7030516
+  },
+  "transcriptDir": "/home/tovi/Documents/GitHub/mainsail/.qoder/sessions/384b6809-1c9b-4c86-b0da-02de0e2112c9/workflows/runs/wf_dc6c6013-0b9",
+  "scriptPath": "/home/tovi/Documents/GitHub/mainsail/.qoder/sessions/384b6809-1c9b-4c86-b0da-02de0e2112c9/workflows/scripts/notion-reskin-mainsail-wf_dc6c6013-0b9.js",
+  "error": "Reached the maximum turn limit (150). The task may be incomplete. Increase maxTurns in this Subagent's configuration and retry.\n\nPartial result:\nApplying the dual-anchor fix across the remaining component gates:\n\n"
+}

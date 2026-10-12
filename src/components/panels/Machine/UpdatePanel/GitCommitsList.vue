@@ -152,14 +152,14 @@ export default class GitCommitsList extends Mixins(BaseMixin) {
                 width: 18px;
                 height: 2px;
                 top: 7px;
-                background: rgba(255, 255, 255, 0.5);
+                background: var(--notion-border-strong, rgba(255, 255, 255, 0.5));
                 z-index: 1;
             }
         }
 
         .v-timeline-item__inner-dot {
-            background-color: #1e1e1e !important;
-            border: 2px solid rgba(255, 255, 255, 0.5) !important;
+            background-color: var(--notion-popover-bg, #1e1e1e) !important;
+            border: 2px solid var(--notion-text-muted, rgba(255, 255, 255, 0.5)) !important;
             width: 8px;
             height: 8px;
             position: relative;

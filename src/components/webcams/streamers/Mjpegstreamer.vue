@@ -287,7 +287,10 @@ export default class Mjpegstreamer extends Mixins(BaseMixin, WebcamMixin) {
     border-top-left-radius: 5px;
 }
 
-html.theme--light .webcamFpsOutput {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so on a default light boot `html.theme--light` alone never matches */
+html.theme--light .webcamFpsOutput,
+.v-application.theme--light .webcamFpsOutput {
     background: rgba(255, 255, 255, 0.7);
 }
 

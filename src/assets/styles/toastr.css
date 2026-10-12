@@ -1,17 +1,34 @@
-.v-toast__item--error {
-    background-color: #f56565 !important;
-}
+/* vue-toast-notification helpers. The Notion surface + semantic colours live in
+   src/assets/styles/notion.css (section 15) — the rules there use the
+   --notion-* tokens, which flip with the active theme, so the off-spec hexes
+   that used to fight them here are gone. This file keeps only what notion.css
+   does not own: the font stack (Roboto's @font-face was removed by the reskin,
+   so it must come from the tokens) and the upload-snackbar offset. */
 
-.v-toast__item--success {
-    background-color: #38a169 !important;
-}
-
-.v-toast__item--warning {
-    background-color: #ed8936 !important;
+.v-toast__item {
+    font-family: var(
+        --notion-font-sans,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Helvetica,
+        Arial,
+        sans-serif
+    );
 }
 
 .v-toast__text {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(
+        --notion-font-sans,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Helvetica,
+        Arial,
+        sans-serif
+    );
 }
 
 .fullscreenUpload--active .v-toast--bottom {

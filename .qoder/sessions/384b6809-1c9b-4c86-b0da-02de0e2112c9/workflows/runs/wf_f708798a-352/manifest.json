@@ -1,0 +1,94 @@
+{
+  "runId": "wf_f708798a-352",
+  "workflowName": "notion-reskin-fix-complete",
+  "scriptPath": "/home/tovi/Documents/GitHub/mainsail/.qoder/sessions/384b6809-1c9b-4c86-b0da-02de0e2112c9/workflows/scripts/notion-reskin-fix-complete-wf_f708798a-352.js",
+  "source": "inline",
+  "meta": {
+    "name": "notion-reskin-fix-complete",
+    "description": "Apply remaining audit fixes from the Notion reskin, then gate with lint+build",
+    "phases": [
+      {
+        "title": "Fix",
+        "detail": "3 parallel fixers, disjoint file ownership"
+      },
+      {
+        "title": "Gate",
+        "detail": "lint + vite build must pass clean"
+      }
+    ]
+  },
+  "createdAt": "2026-10-12T06:14:19.877Z",
+  "updatedAt": "2026-10-12T07:04:02.716Z",
+  "status": "completed",
+  "outputPath": "/home/tovi/Documents/GitHub/mainsail/.qoder/sessions/384b6809-1c9b-4c86-b0da-02de0e2112c9/workflows/runs/wf_f708798a-352/output.json",
+  "agents": [
+    {
+      "index": 1,
+      "label": "fix:notion.css",
+      "phaseIndex": 1,
+      "phaseTitle": "Fix",
+      "journalKey": "v2:291366e12ba233698e097712aae3d8dab79bb68b688b82dc332937231270d40a",
+      "agentId": "aworkflow-subagent-e38e13cd12e65f80",
+      "agentType": "workflow-subagent",
+      "state": "done",
+      "attempts": 1,
+      "outputPath": "/tmp/qoder-cli-cn-1000/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/tasks/a79f2dea9fd3d0b0c.output",
+      "transcriptPath": "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-e38e13cd12e65f80.jsonl",
+      "attemptTranscriptPaths": [
+        "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-e38e13cd12e65f80.jsonl"
+      ],
+      "updatedAt": "2026-10-12T07:04:02.715Z"
+    },
+    {
+      "index": 2,
+      "label": "fix:layout-css",
+      "phaseIndex": 1,
+      "phaseTitle": "Fix",
+      "journalKey": "v2:3ac633cf891724c23b364f714c2ef97b1c568c78710ffdcc5a6178623343cea8",
+      "agentId": "aworkflow-subagent-4c3bdd0e79369638",
+      "agentType": "workflow-subagent",
+      "state": "done",
+      "attempts": 1,
+      "outputPath": "/tmp/qoder-cli-cn-1000/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/tasks/aa8349aafd184af29.output",
+      "transcriptPath": "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-4c3bdd0e79369638.jsonl",
+      "attemptTranscriptPaths": [
+        "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-4c3bdd0e79369638.jsonl"
+      ],
+      "updatedAt": "2026-10-12T07:04:02.715Z"
+    },
+    {
+      "index": 3,
+      "label": "fix:components",
+      "phaseIndex": 1,
+      "phaseTitle": "Fix",
+      "journalKey": "v2:acea8c367fdb5aedd6189e761ff7bc5f1085597cb118e96dffbb3b851a07a1d6",
+      "agentId": "aworkflow-subagent-eac0fc51c18f2aa0",
+      "agentType": "workflow-subagent",
+      "state": "done",
+      "attempts": 1,
+      "outputPath": "/tmp/qoder-cli-cn-1000/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/tasks/ab0fa8eaec678794e.output",
+      "transcriptPath": "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-eac0fc51c18f2aa0.jsonl",
+      "attemptTranscriptPaths": [
+        "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-eac0fc51c18f2aa0.jsonl"
+      ],
+      "updatedAt": "2026-10-12T07:04:02.715Z"
+    },
+    {
+      "index": 4,
+      "label": "gate:build",
+      "phaseIndex": 2,
+      "phaseTitle": "Gate",
+      "journalKey": "v2:d20f0fda147ebf9a82c15e81102903b68d51b7f16c5c368ee2165bd6f5ff92e2",
+      "agentId": "aworkflow-subagent-a549e20a545ae0fa",
+      "agentType": "workflow-subagent",
+      "state": "done",
+      "attempts": 1,
+      "outputPath": "/tmp/qoder-cli-cn-1000/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/tasks/ad1df03323a723e8d.output",
+      "transcriptPath": "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-a549e20a545ae0fa.jsonl",
+      "attemptTranscriptPaths": [
+        "/home/tovi/.qoder-cn/projects/-home-tovi-Documents-GitHub-mainsail/384b6809-1c9b-4c86-b0da-02de0e2112c9/subagents/agent-aworkflow-subagent-a549e20a545ae0fa.jsonl"
+      ],
+      "updatedAt": "2026-10-12T07:04:02.715Z"
+    }
+  ]
+}

@@ -1,10 +1,40 @@
+/* page-level shells, utilities and scrollbars — Notion tokens come from
+   ./notion.css (imported last in App.vue); every var keeps a literal
+   fallback so this file also works standalone.
+
+   BOOT-THEME TRAP: App.vue writes `html.className` from a NON-immediate
+   `@Watch('mode')`, and the default mode already equals that value, so on a
+   normal light-mode boot <html> carries NO theme class at all. Nothing here may
+   depend on `html.theme--*`. The `--notion-*` tokens are declared on
+   `:root` + `.v-application.theme--*` in notion.css and resolve through the
+   `--v-*-base` properties Vuetify regenerates on `:root` per active theme, so
+   the page shell flips correctly without any html class. Every theme-gated
+   rule below is therefore written twice (`html.theme--*` +
+   `html .v-application.theme--*`) — the `.v-application` anchor is the one that
+   always matches, the `html` anchor is what additionally reaches the document
+   scrollbar, which lives on <html> and never inherits the tokens scoped to
+   `.v-application`. */
+
 html {
     overflow: auto;
-    scrollbar-color: #6b6b6b #272727;
+    background: var(--notion-content-bg, #ffffff);
+    scrollbar-color: var(--notion-scrollbar-thumb, rgba(15, 15, 15, 0.35)) var(--notion-scrollbar-track, transparent);
+    scrollbar-width: thin;
 }
 
 body {
-    background: #121212;
+    background: var(--notion-content-bg, #ffffff);
+    color: var(--notion-text, #37352f);
+    font-family: var(
+        --notion-font-sans,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        Helvetica,
+        Arial,
+        sans-serif
+    );
 }
 
 #page-container {
@@ -71,27 +101,57 @@ body {
     height: calc(100vh - 48px);
 }
 
+/* thin Notion scrollbars — one token pair drives both engines (WebKit
+   ::-webkit-scrollbar-* and Firefox scrollbar-color), so Chrome/Safari and
+   Firefox can no longer disagree about the thumb colour. Everything inside
+   .v-application resolves the token from the active theme. */
 ::-webkit-scrollbar {
-    background-color: #272727;
-    width: 14px;
-    height: 14px;
+    background-color: transparent;
+    width: 11px;
+    height: 11px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #6b6b6b;
-    border-radius: 7px;
-    border: 4px solid #272727;
-    min-width: 100px;
-    min-height: 100px;
+    background-color: var(--notion-scrollbar-thumb, rgba(15, 15, 15, 0.35));
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    min-width: 24px;
+    min-height: 24px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--notion-scrollbar-thumb-hover, rgba(15, 15, 15, 0.5));
+}
+
+/* overlayscrollbars v1 keeps the `os-theme-light` class in both modes
+   (src/main.ts) and its vendor handle is a black 40% wash, invisible on the
+   dark canvas. The handle lives inside .v-application, so the token pair above
+   already tracks the theme — no per-mode selector needed. */
+.os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
+    background: var(--notion-scrollbar-thumb, rgba(15, 15, 15, 0.35)) !important;
+}
+
+.os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle:hover {
+    background: var(--notion-scrollbar-thumb-hover, rgba(15, 15, 15, 0.5)) !important;
+}
+
+/* hairline borders used across panels + tables */
 .bt-1,
 .bb-1,
 .bl-1,
 .br-1 {
     border-width: 0;
     border-style: solid !important;
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: var(--notion-border, #ededec) !important;
 }
 
 .bt-1 {
@@ -110,35 +170,44 @@ body {
     border-left-width: 1px !important;
 }
 
-.theme--light .bt-1,
-.theme--light .bb-1,
-.theme--light .bl-1,
-.theme--light .br-1 {
-    border-color: rgba(0, 0, 0, 0.12) !important;
+/* explicit theme classes (dual anchored, see the BOOT-THEME TRAP above). The
+   `html` half retargets the document scrollbar — it lives on <html>, which
+   cannot see the tokens scoped to .v-application — the `.v-application` half
+   retargets every scroller inside the app and is the one that actually matches
+   on boot. Values stay token-based with a literal fallback so they can never
+   drift away from the --notion-* pair in notion.css. */
+html.theme--light,
+html .v-application.theme--light {
+    background: var(--notion-content-bg, #ffffff);
+    scrollbar-color: var(--notion-scrollbar-thumb, rgba(15, 15, 15, 0.35)) var(--notion-scrollbar-track, transparent);
+    scrollbar-width: thin;
 }
 
-/* Light theme */
-html.theme--light {
-    scrollbar-color: rgba(0, 0, 0, 0.55) #ffffff;
+html.theme--light ::-webkit-scrollbar-thumb,
+html .v-application.theme--light ::-webkit-scrollbar-thumb {
+    background-color: var(--notion-scrollbar-thumb, rgba(15, 15, 15, 0.35));
+    border-color: var(--notion-scrollbar-track, transparent);
 }
 
-html.theme--light body {
-    background: #ffffff !important;
+html.theme--light ::-webkit-scrollbar-thumb:hover,
+html .v-application.theme--light ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--notion-scrollbar-thumb-hover, rgba(15, 15, 15, 0.5));
 }
 
-html.theme--light ::-webkit-scrollbar {
-    background-color: #ffffff;
+html.theme--dark,
+html .v-application.theme--dark {
+    background: var(--notion-content-bg, #191919);
+    scrollbar-color: var(--notion-scrollbar-thumb, rgba(255, 255, 255, 0.28)) var(--notion-scrollbar-track, transparent);
+    scrollbar-width: thin;
 }
 
-html.theme--light ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-color: #ffffff;
+html.theme--dark ::-webkit-scrollbar-thumb,
+html .v-application.theme--dark ::-webkit-scrollbar-thumb {
+    background-color: var(--notion-scrollbar-thumb, rgba(255, 255, 255, 0.28));
+    border-color: var(--notion-scrollbar-track, transparent);
 }
 
-html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
-    background: rgba(0, 0, 0, 0.4) !important;
-}
-
-html.theme--light .os-theme-light > .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle:hover {
-    background: rgba(0, 0, 0, 0.55) !important;
+html.theme--dark ::-webkit-scrollbar-thumb:hover,
+html .v-application.theme--dark ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--notion-scrollbar-thumb-hover, rgba(255, 255, 255, 0.42));
 }

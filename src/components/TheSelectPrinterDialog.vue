@@ -45,7 +45,12 @@
                         }}
                     </p>
                     <div class="text-center">
-                        <v-btn text color="white" class="mr-3" @click="switchToChangePrinter">
+                        <!-- no `color="white"` any more: it compiled to `.white--text`
+                             (`color:#fff !important`), which only ever read on the old
+                             dark card and is invisible on the Notion popover surface.
+                             Dropping the prop lets the button inherit the dialog ink
+                             (var(--notion-text)) in both themes. -->
+                        <v-btn text class="mr-3" @click="switchToChangePrinter">
                             {{ $t('SelectPrinterDialog.ChangePrinter') }}
                         </v-btn>
                         <v-btn text color="primary" @click="reconnect">{{ $t('SelectPrinterDialog.TryAgain') }}</v-btn>

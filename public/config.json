@@ -1,9 +1,9 @@
 {
     "defaultLocale": "en",
-    "defaultMode": "dark",
+    "defaultMode": "light",
     "defaultTheme": "mainsail",
     "hostname": null,
-    "port": null,
+    "port": 7126,
     "path": null,
     "instancesDB": "moonraker",
     "instances": []

@@ -500,7 +500,7 @@ export default class TheEditor extends Mixins(BaseMixin) {
     outline: 0;
     flex-grow: 0;
     border-radius: 4px;
-    background: var(--v-toolbar-base);
+    background: var(--notion-active, #ededec);
     transition: background 300ms;
     cursor: pointer;
     margin-right: 0.5em;
@@ -554,7 +554,11 @@ export default class TheEditor extends Mixins(BaseMixin) {
     clip-path: inset(0 0 0 -12px);
 }
 
-html.theme--light .structure-sidebar {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so with light as the default mode <html> carries no theme class on a normal
+   boot and a light-only override would silently never land */
+html.theme--light .structure-sidebar,
+.v-application.theme--light .structure-sidebar {
     border-left-color: rgba(0, 0, 0, 0.12);
     box-shadow: -4px 0 8px rgba(0, 0, 0, 0.12);
 }
@@ -573,11 +577,13 @@ html.theme--light .structure-sidebar {
     color: #569cd6;
 }
 
-html.theme--light ._structure-sidebar-section {
+html.theme--light ._structure-sidebar-section,
+.v-application.theme--light ._structure-sidebar-section {
     color: #267f99;
 }
 
-html.theme--light ._structure-sidebar-key {
+html.theme--light ._structure-sidebar-key,
+.v-application.theme--light ._structure-sidebar-key {
     color: #0000ff;
 }
 

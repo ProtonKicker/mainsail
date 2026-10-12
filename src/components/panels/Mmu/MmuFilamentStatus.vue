@@ -498,7 +498,8 @@ svg text {
     fill: var(--zone-background-dark-theme);
 }
 
-html.theme--light .zone-background {
+html.theme--light .zone-background,
+.v-application.theme--light .zone-background {
     fill: var(--zone-background-light-theme);
 }
 
@@ -506,7 +507,8 @@ html.theme--light .zone-background {
     fill: var(--background-dark-theme);
 }
 
-html.theme--light .fil-background {
+html.theme--light .fil-background,
+.v-application.theme--light .fil-background {
     fill: var(--background-light-theme);
 }
 

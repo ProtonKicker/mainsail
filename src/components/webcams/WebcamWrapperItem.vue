@@ -86,7 +86,10 @@ export default class WebcamWrapperItem extends Mixins(BaseMixin) {
     object-fit: contain;
 }
 
-html.theme--light ::v-deep .webcamBackground {
-    background: rgba(255, 255, 255, 0.7);
-}
+/* The light-canvas backdrop for `.webcamBackground` is NOT here on purpose: this
+   block is scoped, and `html.theme--light ::v-deep .webcamBackground` compiles to
+   `html.theme--light[data-v-*] .webcamBackground` — <html> never carries this
+   component's scope id, so the rule could never match in either theme. It lives
+   in src/assets/styles/notion.css (section 12) instead, where the unscoped
+   `.v-application.theme--light` anchor is the one that actually lands. */
 </style>

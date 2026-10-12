@@ -73,7 +73,11 @@ export default class ConsoleTableEntry extends Mixins(BaseMixin) {
         }
 
         & + .consoleTableRow .col {
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            /* token, not rgba(255,255,255,.12): the console sits on the light
+               --notion-code-bg surface now, where a white hairline is invisible,
+               and the old light-mode fix was gated on an html theme class that
+               never exists on a default boot */
+            border-top: 1px solid var(--notion-border-strong, rgba(0, 0, 0, 0.12));
         }
     }
 
@@ -85,7 +89,26 @@ export default class ConsoleTableEntry extends Mixins(BaseMixin) {
     }
 }
 
-html.theme--light .consoleTableRow.default + .consoleTableRow .col {
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
+/*
+ * Quiet console ink on the light code surface.
+ *
+ * The timestamp column and the action/debug entries ship Vuetify's
+ * `text--disabled` helper, whose Material ink (rgba(0,0,0,.38), ~2.7:1 on the new
+ * #f7f6f3 console) is far too weak for text a user has to read. notion.css now
+ * remaps the helper globally (`html .v-application.theme--light .text--disabled`,
+ * 0,3,1, which finally outranks Vuetify's own 0,3,0 theme rule), so the rules
+ * below are the local belt-and-braces for the columns that carry the ink class
+ * directly — they keep the same `--notion-text-muted` token and stay correct even
+ * if this row is rendered outside the app shell.
+ *
+ * `!! ` error lines keep `error--text`; its light value was darkened to #c53737
+ * (5.3:1) in src/plugins/vuetify.ts, which is what Vuetify writes into
+ * `--v-error-base`, so nothing has to be overridden here.
+ */
+.v-application .consoleTableRow .console-time,
+.v-application .consoleTableRow .console-time.text--disabled,
+.v-application .consoleTableRow.text--disabled,
+.v-application .consoleTableRow .console-message.text--disabled {
+    color: var(--notion-text-muted, #757575) !important;
 }
 </style>

@@ -142,9 +142,13 @@ export default class TemperaturePanelPresets extends Mixins(BaseMixin) {
 
 /*
 workaround for fixing a transparency issue
-which is assumingly a vuetify bug
+which is assumingly a vuetify bug.
+Kept, but it now matches the surface it sits on: the preheat menu is a Notion
+popover (--notion-popover-bg), so the old hardcoded #1e1e1e cut a near-black bar
+across the light menu.
 */
 ._fix_transparency {
-    background-color: #1e1e1e;
+    background-color: var(--notion-popover-bg, #ffffff);
+    border-color: var(--notion-border, #ededec);
 }
 </style>

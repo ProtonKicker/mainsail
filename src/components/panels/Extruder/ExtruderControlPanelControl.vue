@@ -329,7 +329,10 @@ export default class ExtruderControlPanel extends Mixins(BaseMixin, ExtruderMixi
     }
 }
 
-html.theme--light ._btn-group .v-btn {
+/* dual anchor: App.vue only writes html.className from the non-immediate mode
+   watcher, so `html.theme--light` alone never matches a default light boot */
+html.theme--light ._btn-group .v-btn,
+.v-application.theme--light ._btn-group .v-btn {
     border-color: rgba(0, 0, 0, 0.12) !important;
 }
 

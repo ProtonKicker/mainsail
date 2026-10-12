@@ -249,12 +249,12 @@ export default class TheSettingsMenu extends Mixins(BaseMixin) {
 }
 
 .settings-tabs-bar {
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    /* token hairline: the old dark-first rgba(255,255,255,.12) sat on the white
+       settings card, and the only light-mode override was gated on
+       `html.theme--light`, which a default boot never sets — the tab rail then
+       read as one undivided block */
+    border-right: 1px solid var(--notion-border, rgba(0, 0, 0, 0.12));
     height: 100%;
-}
-
-html.theme--light .settings-tabs-bar {
-    border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .settings-tabs.height500 {

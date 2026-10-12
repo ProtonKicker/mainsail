@@ -60,7 +60,11 @@ text {
     fill: var(--zone-background-dark-theme);
 }
 
-html.theme--light .sensor-disabled {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so on a default light boot `html.theme--light` alone never matches and the
+   SVG keeps the dark-theme fill */
+html.theme--light .sensor-disabled,
+.v-application.theme--light .sensor-disabled {
     fill: var(--zone-background-light-theme);
 }
 
@@ -68,7 +72,8 @@ html.theme--light .sensor-disabled {
     fill: var(--zone-background-dark-theme);
 }
 
-html.theme--light .sensor-normal {
+html.theme--light .sensor-normal,
+.v-application.theme--light .sensor-normal {
     fill: var(--zone-background-light-theme);
 }
 </style>

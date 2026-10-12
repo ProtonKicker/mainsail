@@ -1,28 +1,292 @@
+/**
+ * Sidebar — Notion reskin.
+ *
+ * Ownership / division of work (kept deliberately thin):
+ * - `notion.css` owns the drawer surface and every generic Vuetify internal:
+ *   `.v-navigation-drawer` background/border, `.v-list` transparent + padding,
+ *   `.v-list-item` 30px rows / 1px 8px margins / 6px radius / hover fill /
+ *   neutralised `::before` state layer, `.v-list-item__title` 14px 500,
+ *   `.v-list-item__icon` gutter + mark colour, drawer dividers. Nothing here
+ *   repeats those declarations.
+ * - This file only styles sidebar-specific hooks: `#nav-header`,
+ *   `.sidebar-drawer` (the static class TheSidebar.vue puts on
+ *   <v-navigation-drawer>), `.sidebar-logo`, `.nav-logo`, `.nav-printer-name`,
+ *   `.small-list-item`, `.active-nav-item`, `.menu-item-icon`,
+ *   `.menu-item-title` and the legacy `nav ul.navi` markup.
+ *
+ * BOOT-THEME TRAP (see fonts.css): App.vue assigns `html.className` from a
+ * non-immediate watcher, so on first paint `<html>` carries no theme class,
+ * while Vuetify always puts `theme--light|dark` on `.v-application`. Theme-gated
+ * rules below are therefore written twice (`html.theme--*` +
+ * `.v-application.theme--*`).
+ *
+ * CASCADE: App.vue imports sidebar.css *before* notion.css, so every rule here
+ * that must win uses strictly more class-level selectors than the notion.css
+ * rule it counters — never a tie.
+ *
+ * SELECTED ROW: Vuetify never adds `.v-list-item--active` to router rows
+ * (`mixins/routable` returns an empty class map when `to` is set) and
+ * vue-router's `.router-link-active` matches `to="/"` on *every* route (these
+ * rows do not set `exact`), so the sidebar's real selection is
+ * `.active-nav-item`, computed with an exact path compare.
+ */
+
+/* ==========================================================================
+   1. Workspace row
+   `#nav-header` is the historic markup (kept, so custom `.theme` stylesheets
+   that still reference it keep working — no template renders it today);
+   `.sidebar-logo` is the row TheSidebar.vue actually renders on small screens.
+   Notion: left aligned, ~40px, 20px mark + 14px/600 name, no separator.
+   ========================================================================== */
 #nav-header {
-    text-align: center;
-    border-bottom: 1px solid #ffffff40;
-    margin-bottom: 1em;
-    padding: 0.75em 0 0.75em 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    text-align: left;
+    min-height: 40px;
+    margin: 0 8px 4px;
+    padding: 6px 12px;
+    border-bottom: 0;
+    border-radius: 6px;
+    transition: background-color 0.15s ease-in-out;
 }
 
 #nav-header img {
-    height: 40px;
-    margin-right: 1em;
+    height: 20px;
+    margin-right: 8px;
 }
 
 #nav-header .v-toolbar__title {
-    font-size: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
     vertical-align: middle;
 }
 
-.v-navigation-drawer__content {
-    z-index: 10;
-    padding-bottom: 1em;
+html.theme--light #nav-header,
+.v-application.theme--light #nav-header {
+    color: #37352f;
 }
 
+html.theme--dark #nav-header,
+.v-application.theme--dark #nav-header {
+    color: #d4d4d4;
+}
+
+html.theme--light #nav-header:hover,
+.v-application.theme--light #nav-header:hover {
+    background-color: rgba(22, 22, 22, 0.06);
+}
+
+html.theme--dark #nav-header:hover,
+.v-application.theme--dark #nav-header:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* the row that is actually rendered: TheSidebar.vue switches its ::before
+ * overlay off (.no-background), so the hover fill sits on the row itself */
+html.theme--light .v-application .sidebar-drawer .v-list-item.sidebar-logo:hover,
+.v-application.theme--light .sidebar-drawer .v-list-item.sidebar-logo:hover {
+    background-color: rgba(22, 22, 22, 0.06);
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.sidebar-logo:hover,
+.v-application.theme--dark .sidebar-drawer .v-list-item.sidebar-logo:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* printer name = Notion workspace title */
+html.theme--light .v-application .sidebar-drawer .nav-printer-name,
+.v-application.theme--light .sidebar-drawer .nav-printer-name {
+    color: #37352f;
+}
+
+html.theme--dark .v-application .sidebar-drawer .nav-printer-name,
+.v-application.theme--dark .sidebar-drawer .nav-printer-name {
+    color: #d4d4d4;
+}
+
+/* ==========================================================================
+   2. Drawer internals that are sidebar local
+   ========================================================================== */
+
+/* the nav must stay above the `#img` slot background (the drawer is a flex
+ * container, so z-index applies to its children); notion.css owns the padding */
+html .v-application .sidebar-drawer .v-navigation-drawer__content {
+    z-index: 10;
+}
+
+/* ==========================================================================
+   3. Nav rows — the parts notion.css leaves open
+   ========================================================================== */
+
+/* Vuetify pins `.v-list-item__icon` to flex-start, which reads as misaligned in
+ * a 30px row, and the mark is sized through `font-size` only — the mdiSvg
+ * `<svg>` keeps its own 24px box, so both are pinned to 16px here */
+.v-application .sidebar-drawer .menu-item-icon {
+    align-self: center;
+}
+
+.v-application .sidebar-drawer .menu-item-icon i.v-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+}
+
+.v-application .sidebar-drawer .menu-item-icon i.v-icon .v-icon__svg {
+    height: 16px;
+    width: 16px;
+}
+
+/* ink: muted label + grey mark, charcoal once selected */
+html.theme--light .v-application .sidebar-drawer .menu-item-title,
+.v-application.theme--light .sidebar-drawer .menu-item-title {
+    color: #787774;
+}
+
+html.theme--dark .v-application .sidebar-drawer .menu-item-title,
+.v-application.theme--dark .sidebar-drawer .menu-item-title {
+    color: #9b9b9b;
+}
+
+html.theme--light .v-application .sidebar-drawer .menu-item-icon,
+html.theme--light .v-application .sidebar-drawer .menu-item-icon i.v-icon,
+.v-application.theme--light .sidebar-drawer .menu-item-icon,
+.v-application.theme--light .sidebar-drawer .menu-item-icon i.v-icon {
+    color: #9b9a97;
+}
+
+html.theme--dark .v-application .sidebar-drawer .menu-item-icon,
+html.theme--dark .v-application .sidebar-drawer .menu-item-icon i.v-icon,
+.v-application.theme--dark .sidebar-drawer .menu-item-icon,
+.v-application.theme--dark .sidebar-drawer .menu-item-icon i.v-icon {
+    color: #8f8f8f;
+}
+
+/* ==========================================================================
+   4. Selected row (`.active-nav-item` = exact route match)
+   ========================================================================== */
+html.theme--light .v-application .sidebar-drawer .v-list-item.active-nav-item,
+.v-application.theme--light .sidebar-drawer .v-list-item.active-nav-item {
+    background-color: #ededec;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.active-nav-item,
+.v-application.theme--dark .sidebar-drawer .v-list-item.active-nav-item {
+    background-color: #2f2f2f;
+}
+
+/* the selected row keeps its fill on hover (Notion does not flash) */
+html.theme--light .v-application .sidebar-drawer .v-list-item.active-nav-item:hover,
+.v-application.theme--light .sidebar-drawer .v-list-item.active-nav-item:hover {
+    background-color: #ededec;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.active-nav-item:hover,
+.v-application.theme--dark .sidebar-drawer .v-list-item.active-nav-item:hover {
+    background-color: #2f2f2f;
+}
+
+html.theme--light .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-title,
+.v-application.theme--light .sidebar-drawer .v-list-item.active-nav-item .menu-item-title {
+    color: #37352f;
+    font-weight: 600;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-title,
+.v-application.theme--dark .sidebar-drawer .v-list-item.active-nav-item .menu-item-title {
+    color: #d4d4d4;
+    font-weight: 600;
+}
+
+html.theme--light .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon,
+html.theme--light .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon i.v-icon,
+.v-application.theme--light .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon,
+.v-application.theme--light .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon i.v-icon {
+    color: #37352f;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon,
+html.theme--dark .v-application .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon i.v-icon,
+.v-application.theme--dark .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon,
+.v-application.theme--dark .sidebar-drawer .v-list-item.active-nav-item .menu-item-icon i.v-icon {
+    color: #d4d4d4;
+}
+
+/* `to="/"` (Dashboard) is `.router-link-active` on every route, so inside the
+ * drawer a row that is not exactly active must not look selected. notion.css
+ * should drop `.router-link-active` from its selected-row rules; until then the
+ * false positive is neutralised here. */
+html .v-application .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item):not(:hover) {
+    background-color: transparent;
+}
+
+html.theme--light .v-application .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-title,
+.v-application.theme--light .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-title {
+    color: #787774;
+    font-weight: 500;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-title,
+.v-application.theme--dark .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-title {
+    color: #9b9b9b;
+    font-weight: 500;
+}
+
+html.theme--light .v-application .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-icon,
+html.theme--light
+    .v-application
+    .sidebar-drawer
+    .v-list-item.router-link-active:not(.active-nav-item)
+    .menu-item-icon
+    i.v-icon,
+.v-application.theme--light .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-icon,
+.v-application.theme--light
+    .sidebar-drawer
+    .v-list-item.router-link-active:not(.active-nav-item)
+    .menu-item-icon
+    i.v-icon {
+    color: #9b9a97;
+}
+
+html.theme--dark .v-application .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-icon,
+html.theme--dark
+    .v-application
+    .sidebar-drawer
+    .v-list-item.router-link-active:not(.active-nav-item)
+    .menu-item-icon
+    i.v-icon,
+.v-application.theme--dark .sidebar-drawer .v-list-item.router-link-active:not(.active-nav-item) .menu-item-icon,
+.v-application.theme--dark
+    .sidebar-drawer
+    .v-list-item.router-link-active:not(.active-nav-item)
+    .menu-item-icon
+    i.v-icon {
+    color: #8f8f8f;
+}
+
+/* ==========================================================================
+   5. Icons-only rail
+   The mark is the only visible child, so centre it (Vuetify only does that for
+   the unused `custom-mini-variant` prop) and give the rail its own row height.
+   ========================================================================== */
+html .v-application .sidebar-drawer.v-navigation-drawer--mini-variant .v-list-item.small-list-item {
+    min-height: 40px;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+html .v-application .sidebar-drawer.v-navigation-drawer--mini-variant .v-list-item.small-list-item .menu-item-icon {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+ * Legacy `nav ul.navi` markup — no template renders it any more, but the
+ * selectors are kept (custom themes may still reference them) and restyled
+ * from the old white-on-transparent links to the Notion nav vocabulary.
+ * -------------------------------------------------------------------------- */
 nav ul.navi {
     list-style: none;
     padding: 0;
@@ -36,22 +300,49 @@ nav ul.navi li.nav-item {
 
 nav ul.navi .nav-link {
     display: block;
-    color: white;
-    border-radius: 0.5em;
-    line-height: 30px;
+    border-radius: 6px;
+    line-height: 20px;
     font-size: 14px;
-    font-weight: 600;
-    padding: 10px 15px;
-    opacity: 0.85;
-    transition: all 0.15s ease-in;
+    font-weight: 500;
+    letter-spacing: normal;
+    padding: 6px 10px;
+    margin: 1px 8px;
+    opacity: 1;
+    transition:
+        background-color 0.15s ease-in-out,
+        color 0.15s ease-in-out;
     text-decoration: none;
-    margin: 0.5em 1em;
 }
 
-nav ul.navi .nav-link:hover,
-nav ul.navi li.active > .nav-link,
-nav ul.navi .nav-link.router-link-active {
-    background: rgba(255, 255, 255, 0.3);
+html.theme--light nav ul.navi .nav-link,
+.v-application.theme--light nav ul.navi .nav-link {
+    color: #787774;
+}
+
+html.theme--dark nav ul.navi .nav-link,
+.v-application.theme--dark nav ul.navi .nav-link {
+    color: #9b9b9b;
+}
+
+html.theme--light nav ul.navi .nav-link:hover,
+html.theme--light nav ul.navi li.active > .nav-link,
+html.theme--light nav ul.navi .nav-link.router-link-active,
+.v-application.theme--light nav ul.navi .nav-link:hover,
+.v-application.theme--light nav ul.navi li.active > .nav-link,
+.v-application.theme--light nav ul.navi .nav-link.router-link-active {
+    background-color: rgba(22, 22, 22, 0.06);
+    color: #37352f;
+    opacity: 1;
+}
+
+html.theme--dark nav ul.navi .nav-link:hover,
+html.theme--dark nav ul.navi li.active > .nav-link,
+html.theme--dark nav ul.navi .nav-link.router-link-active,
+.v-application.theme--dark nav ul.navi .nav-link:hover,
+.v-application.theme--dark nav ul.navi li.active > .nav-link,
+.v-application.theme--dark nav ul.navi .nav-link.router-link-active {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #d4d4d4;
     opacity: 1;
 }
 
@@ -61,25 +352,38 @@ nav ul.navi .nav-link.router-link-active i.nav-arrow {
 }
 
 nav ul.navi .nav-link > i.v-icon {
-    color: white;
-    font-size: 1.7em;
-    margin-right: 0.5em;
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+}
+
+html.theme--light nav ul.navi .nav-link > i.v-icon,
+.v-application.theme--light nav ul.navi .nav-link > i.v-icon {
+    color: #9b9a97;
+}
+
+html.theme--dark nav ul.navi .nav-link > i.v-icon,
+.v-application.theme--dark nav ul.navi .nav-link > i.v-icon {
+    color: #8f8f8f;
 }
 
 nav ul.navi .nav-link > span.nav-title {
-    line-height: 30px;
-    font-weight: 600;
-    text-transform: uppercase;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: normal;
+    text-transform: none;
     white-space: nowrap;
-    letter-spacing: 1px;
 }
 
 nav ul.navi .nav-link > .nav-arrow {
     float: right;
-    margin-top: 5px;
+    margin-top: 2px;
     margin-right: 0;
     transform: rotate(90deg);
 }
+
 nav ul.navi .nav-link > .nav-arrow.right {
     transform: rotate(-90deg);
 }
@@ -97,16 +401,25 @@ nav ul.navi > li.active > ul.child {
 }
 
 nav ul.navi > li > ul.child .nav-link {
-    padding: 5px 15px 5px 15px;
+    padding: 5px 10px 5px 34px;
 }
 
-nav ul.navi > li > ul.child .nav-link:hover,
-nav ul.navi > li > ul.child .nav-link.router-link-active {
-    background: rgba(255, 255, 255, 0.2);
+html.theme--light nav ul.navi > li > ul.child .nav-link:hover,
+html.theme--light nav ul.navi > li > ul.child .nav-link.router-link-active,
+.v-application.theme--light nav ul.navi > li > ul.child .nav-link:hover,
+.v-application.theme--light nav ul.navi > li > ul.child .nav-link.router-link-active {
+    background-color: rgba(22, 22, 22, 0.06);
+}
+
+html.theme--dark nav ul.navi > li > ul.child .nav-link:hover,
+html.theme--dark nav ul.navi > li > ul.child .nav-link.router-link-active,
+.v-application.theme--dark nav ul.navi > li > ul.child .nav-link:hover,
+.v-application.theme--dark nav ul.navi > li > ul.child .nav-link.router-link-active {
+    background-color: rgba(255, 255, 255, 0.06);
 }
 
 nav ul.navi > li > ul.child .nav-link > span.nav-title {
-    text-transform: capitalize;
+    text-transform: none;
     font-weight: 400;
     font-size: 14px;
 }

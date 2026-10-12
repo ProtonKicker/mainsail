@@ -741,19 +741,27 @@ svg a.step.outer {
     fill: #333;
 }
 
-html.theme--light svg a.step.inner {
+/* dual anchor: App.vue writes html.className from a non-immediate mode watcher,
+   so with light as the default boot mode `html.theme--light` alone never
+   matches and every light-mode override below would die. Vuetify always puts
+   the theme class on .v-application, so each selector is repeated for it. */
+html.theme--light svg a.step.inner,
+.v-application.theme--light svg a.step.inner {
     fill: #ccc;
 }
 
-html.theme--light svg a.step.inner-mid {
+html.theme--light svg a.step.inner-mid,
+.v-application.theme--light svg a.step.inner-mid {
     fill: #ddd;
 }
 
-html.theme--light svg a.step.outer-mid {
+html.theme--light svg a.step.outer-mid,
+.v-application.theme--light svg a.step.outer-mid {
     fill: #eee;
 }
 
-html.theme--light svg a.step.outer {
+html.theme--light svg a.step.outer,
+.v-application.theme--light svg a.step.outer {
     fill: #fff;
 }
 
@@ -771,7 +779,9 @@ svg g#stepsXY {
 }
 
 html.theme--light svg g#stepsZ,
-html.theme--light svg g#stepsXY {
+html.theme--light svg g#stepsXY,
+.v-application.theme--light svg g#stepsZ,
+.v-application.theme--light svg g#stepsXY {
     fill: black;
 }
 
@@ -808,7 +818,9 @@ svg g#stepsZ.disabled text {
 }
 
 html.theme--light svg g#stepsXY.disabled text,
-html.theme--light svg g#stepsZ.disabled text {
+html.theme--light svg g#stepsZ.disabled text,
+.v-application.theme--light svg g#stepsXY.disabled text,
+.v-application.theme--light svg g#stepsZ.disabled text {
     fill: rgba(0, 0, 0, 0.5);
 }
 
